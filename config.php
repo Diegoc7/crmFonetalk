@@ -5,13 +5,11 @@ require './environment.php';
 $config = array();
 
 if (ENVIRONMENT == 'development') {
-    define("BASE_URL", "http://192.168.0.126/crm/");
-    $config['dbname'] = 'bd_crm';
-    $config['host'] = '127.0.0.1';
+    define("BASE_URL", "");
+    $config['dbname'] = '';
+    $config['host'] = '';
     $config['dbuser'] = 'root';
-    $config['dbpass'] = 'y2jrpdwk';
-//    $config['dbuser'] = 'Desenvolve';
-//    $config['dbpass'] = 'ds100';
+    $config['dbpass'] = '';
 } else {
     define("BASE_URL", "http://siteonline/");
     $config['dbname'] = 'estrutura_mvc';
