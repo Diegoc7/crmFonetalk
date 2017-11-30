@@ -31,4 +31,5 @@ class usuariosController extends controller{
         $retorno = $usuarios->buscaUsuariosTabela();
         echo json_encode($retorno);
     }
+    
 }

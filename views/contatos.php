@@ -32,14 +32,14 @@
 
                                         </select>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group-material">
                                         <input id="cargo" type="text" name="cargo"  class="input-material" maxlength="100"  >
                                         <label for="cargo" class="label-material">Cargo </label>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group-material">
@@ -144,7 +144,7 @@
                                     <div class="form-group-material">
                                         <!--<input id="data" type="text" name="data"  class="input-material dataFormato" maxlength="100"  >-->
                                         <label for="obs" class="label-material">Observação </label>
-                                        <textarea id="obs" class="form-control" maxlength="150" placeholder="Insira alguma observação" ></textarea>
+                                        <textarea id="observacao" name="observacao" class="form-control" maxlength="150" placeholder="Insira alguma observação" ></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -163,3 +163,120 @@
         </div>
     </div>
 </section>
+<section class="tables">   
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-close">
+                        <!--                      <div class="dropdown">
+                                                <button type="button" id="closeCard3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                                <div aria-labelledby="closeCard3" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                              </div>-->
+                    </div>
+                    <div class="card-header d-flex align-items-center">
+                        <h3 class="h4 ">Tabela de Usuários do Sistema</h3>
+                    </div>
+                    <div class="card-body divTabela">
+                        <table class="tabela table table-striped table-hover" cellspacing="0" width="100%">
+                            <thead>
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>Telefone*</th>
+                                    <th>E-mail</th>
+                                    <th>Empresa</th>
+                                    <th>Funcões</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="modalContato" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header" >
+                <h4 class="modal-title"  id="exampleModalLabel">Completo!</h4>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="client card">
+                                <div class="card-close">
+                                    <div class="dropdown">
+                                        <button type="button" id="closeCard2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-toggle"><i class="fa fa-ellipsis-v"></i></button>
+                                        <div aria-labelledby="closeCard2" class="dropdown-menu dropdown-menu-right has-shadow"><a href="#" class="dropdown-item remove"> <i class="fa fa-times"></i>Close</a><a href="#" class="dropdown-item edit"> <i class="fa fa-gear"></i>Edit</a></div>
+                                    </div>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="client-avatar"><img src="assets/images/fonetalk_logo.png" alt="..." class="img-fluid rounded-circle">
+                                        <div class="status bg-green"></div>
+                                    </div>
+                                    <div class="client-title">
+                                        <h3>Jason Doe</h3><span>Web Developer</span><a href="#">Follow</a>
+                                    </div>
+                                    <div class="client-info">
+                                        <div class="row">
+                                            <div class="col-4"><strong>20</strong><br><small>Photos</small></div>
+                                            <div class="col-4"><strong>54</strong><br><small>Videos</small></div>
+                                            <div class="col-4"><strong>235</strong><br><small>Tasks</small></div>
+                                        </div>
+                                    </div>
+                                    <div class="client-social d-flex justify-content-between"><a href="#" target="_blank"><i class="fa fa-facebook"></i></a><a href="#" target="_blank"><i class="fa fa-twitter"></i></a><a href="#" target="_blank"><i class="fa fa-google-plus"></i></a><a href="#" target="_blank"><i class="fa fa-instagram"></i></a><a href="#" target="_blank"><i class="fa fa-linkedin"></i></a></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8 col-md-offset-4">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Notas</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">references</a>
+                                </li>
+                            </ul>
+
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                <div role="tabpanel" class="tab-pane fade in active" id="profile">
+                                    <br/>
+                                    <div class="line"></div>
+                                    <textarea id="nova_nota" class="form-control" placeholder="Insira uma nota"></textarea>
+                                    <br/>
+                                    <div class="line"></div>
+                                    <div class="btn-group">
+                                        <button class="btn btn-primary">Enviar</button>
+                                    </div>
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="buzz">
+
+                                </div>
+                                <div role="tabpanel" class="tab-pane fade" id="references">ccc</div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            lorem inm
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Fechar</button>
+                        <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
