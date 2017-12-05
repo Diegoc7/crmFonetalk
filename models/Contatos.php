@@ -14,35 +14,69 @@
 class Contatos extends model {
 
     //put your code here
+    private function formataHoraParaBanco($data) {
+//    $data = '21/01/2017';
+        $aux = explode('/', $data);
+//    var_dump($aux);
+        $dataModificada = $aux[2] . "/" . $aux[1] . "/" . $aux[0];
+        return $dataModificada;
+    }
+
     public function adicionaUsuario($array) {
 //        var_dump($array);
         if (isset($array['nome']) && !empty($array['nome']) && isset($array['id_user']) && !empty($array['id_user'])) {
             extract($array);
             $nome = addslashes($nome);
-            $empresa = addslashes($empresa);
+//            $empresa = addslashes($empresa);
+            if (empty($empresa) || !isset($empresa)) {
+                $empresa = '';
+            } else {
+                $empresa = addslashes($empresa);
+            }
             $cargo = addslashes($cargo);
-            $tipoCell = addslashes($tipoCell);
+//            $tipoCell = addslashes($tipoCell);
+            if (empty($tipoCell) || !isset($tipoCell)) {
+                $tipoCell = '';
+            } else {
+                $tipoCell = addslashes($tipoCell);
+            }
             if (empty($telefone) || !isset($telefone)) {
                 $telefone = '';
             } else {
                 $telefone = addslashes($telefone);
             }
-            $tipoCell2 = addslashes($tipoCell2);
+//            $tipoCell2 = addslashes($tipoCell2);
+            if (empty($tipoCell2) || !isset($tipoCell2)) {
+                $tipoCell2 = '';
+            } else {
+                $tipoCell2 = addslashes($tipoCell2);
+            }
             if (empty($telefone2) || !isset($telefone2)) {
                 $telefone2 = '';
             } else {
                 $telefone2 = addslashes($telefone2);
             }
-            $tipoCell3 = addslashes($tipoCell3);
+//            $tipoCell3 = addslashes($tipoCell3);
+            if (empty($tipoCell3) || !isset($tipoCell3)) {
+                $tipoCell3 = '';
+            } else {
+                $tipoCell3 = addslashes($tipoCell3);
+            }
             if (empty($telefone3) || !isset($telefone3)) {
                 $telefone3 = '';
             } else {
                 $telefone3 = addslashes($telefone3);
             }
             $email = addslashes($email);
-            $origem = addslashes($origem);
+//            $origem = addslashes($origem);
+            if (empty($origem) || !isset($origem)) {
+                $origem = '';
+            } else {
+                $origem = addslashes($origem);
+            }
             $cpf = addslashes($cpf);
             $data = addslashes($data);
+            $data = $this->formataHoraParaBanco($data);
             $endereco = addslashes($endereco);
             $observacao = addslashes($observacao);
             $id_user = addslashes($id_user);
@@ -64,6 +98,91 @@ class Contatos extends model {
         return $sql->fetchAll();
     }
 
-   
+    public function buscaContatoEspecifico($id) {
+        $sql = "SELECT contatos.*, empresas.nome AS empresa, usuario.nome AS user FROM contatos LEFT JOIN empresas ON contatos.id_empresa = empresas.id JOIN usuario  WHERE contatos.id = '$id' AND usuario.id= contatos.id_user;";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+    public function countEdit($id){
+        $sql = "SELECT COUNT(*) as c FROM historico_contatos WHERE id_contato = '$id'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetch();
+    }
+    public function editaContato($array) {
+        if (is_array($array) && $array['id_contato'] > 0 && !empty($array['id_contato'])) {
+            extract($array);
+            $nomeEdit = addslashes($nomeEdit);
+//            $empresa = addslashes($empresa);
+            if (empty($empresaEdit) || !isset($empresaEdit)) {
+                $empresaEdit = '';
+            } else {
+                $empresaEdit = addslashes($empresaEdit);
+            }
+            $cargoEdit = addslashes($cargoEdit);
+//            $tipoCell = addslashes($tipoCell);
+            if (empty($tipoCellEdit) || !isset($tipoCellEdit)) {
+                $tipoCellEdit = '';
+            } else {
+                $tipoCellEdit = addslashes($tipoCellEdit);
+            }
+            if (empty($telefoneEdit) || !isset($telefoneEdit)) {
+                $telefoneEdit = '';
+            } else {
+                $telefoneEdit = addslashes($telefoneEdit);
+            }
+//            $tipoCell2 = addslashes($tipoCell2);
+            if (empty($tipoCell2Edit) || !isset($tipoCell2Edit)) {
+                $tipoCell2Edit = '';
+            } else {
+                $tipoCell2Edit = addslashes($tipoCell2Edit);
+            }
+            if (empty($telefone2Edit) || !isset($telefone2Edit)) {
+                $telefone2Edit = '';
+            } else {
+                $telefone2Edit = addslashes($telefone2Edit);
+            }
+//            $tipoCell3 = addslashes($tipoCell3);
+            if (empty($tipoCell3Edit) || !isset($tipoCell3Edit)) {
+                $tipoCell3Edit = '';
+            } else {
+                $tipoCell3Edit = addslashes($tipoCell3Edit);
+            }
+            if (empty($telefone3Edit) || !isset($telefone3Edit)) {
+                $telefone3Edit = '';
+            } else {
+                $telefone3Edit = addslashes($telefone3Edit);
+            }
+            $emailEdit = addslashes($emailEdit);
+//            $origem = addslashes($origem);
+            if (empty($origemEdit) || !isset($origemEdit)) {
+                $origemEdit = '';
+            } else {
+                $origemEdit = addslashes($origemEdit);
+            }
+            $cpfEdit = addslashes($cpfEdit);
+            $dataEdit = addslashes($dataEdit);
+            if(!empty($dataEdit)){
+                $dataEdit = $this->formataHoraParaBanco($dataEdit);
+            }
+            $enderecoEdit = addslashes($enderecoEdit);
+            $observacaoEdit = addslashes($observacaoEdit);
+            $id_user_edit = addslashes($id_user_edit);
+            $sql = "UPDATE contatos SET nome = '$nomeEdit', id_empresa = '$empresaEdit', cargo = '$cargoEdit', tipo_tel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipo_tel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipo_tel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', origem = '$origemEdit', cpf = '$cpfEdit', data_nascimento = '$dataEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit'   WHERE id = '$id_user_edit'";
+            $sql = $this->db->prepare($sql);
+            $sql->execute();
+            
+            $id_contato = addslashes($id_contato);
+            $data = date("Y-m-d H:i:s");
+            $sql = "INSERT INTO historico_contatos VALUES('','$id_user_edit','$id_contato','','$data')";
+            $sql = $this->db->prepare($sql);
+            $sql->execute();
+            
+            return TRUE;
+        } else {
+            return FALSE;
+        }
+    }
 
 }
