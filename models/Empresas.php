@@ -7,25 +7,23 @@
  */
 
 /**
- * Description of Contatos
+ * Description of Empresas
  *
  * @author Diego
  */
-class Contatos extends model {
+class Empresas extends model {
 
     //put your code here
-    
-
-    public function adicionaUsuario($array) {
+    public function adicionaEmpresa($array) {
 //        var_dump($array);
         if (isset($array['nome']) && !empty($array['nome']) && isset($array['id_user']) && !empty($array['id_user'])) {
             extract($array);
             $nome = addslashes($nome);
 //            $empresa = addslashes($empresa);
-            if (empty($empresa) || !isset($empresa)) {
-                $empresa = '';
+            if (empty($contato) || !isset($contato)) {
+                $contato = '';
             } else {
-                $empresa = addslashes($empresa);
+                $contato = addslashes($contato);
             }
             $cargo = addslashes($cargo);
 //            $tipoCell = addslashes($tipoCell);
@@ -63,19 +61,19 @@ class Contatos extends model {
             }
             $email = addslashes($email);
 //            $origem = addslashes($origem);
-            if (empty($origem) || !isset($origem)) {
-                $origem = '';
-            } else {
-                $origem = addslashes($origem);
-            }
-            $cpf = addslashes($cpf);
-            $data = addslashes($data);
-            $data = $this->formataHoraParaBanco($data);
+//            if (empty($origem) || !isset($origem)) {
+//                $origem = '';
+//            } else {
+//                $origem = addslashes($origem);
+//            }
+            $cnpj = addslashes($cnpj);
+            $site = addslashes($site);
+//            $data = $this->formataHoraParaBanco($data);
             $endereco = addslashes($endereco);
             $observacao = addslashes($observacao);
             $id_user = addslashes($id_user);
             $dataInsercao = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO contatos VALUES('','$dataInsercao','$nome','$empresa','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$origem','$cpf','$data','$endereco','$observacao','$id_user')";
+            $sql = "INSERT INTO empresas VALUES('','$dataInsercao','$nome','$contato','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$site','$observacao','$cnpj','$endereco','$id_user')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
             return $this->db->lastInsertId();
@@ -84,39 +82,36 @@ class Contatos extends model {
         }
     }
 
-   
-
-    public function buscaContatosTabela() {
+    public function buscaEmpresasTabela() {
 //     echo   $sql = "SELECT c.nome,c.telefone1,c.email,e.nome AS empresa FROM contatos AS c JOIN empresas AS e WHERE IF(c.id_empresa != 0) THEN c.id_empresa = e.id ELSE (c.id_empresa = 1)";
-        $sql = "SELECT contatos.id, contatos.nome, contatos.telefone1, contatos.email, empresas.nome AS empresa FROM contatos LEFT JOIN empresas ON contatos.id_empresa = empresas.id";
+        $sql = "SELECT empresas.id, empresas.nome, empresas.telefone1, empresas.email, contatos.nome AS contato FROM empresas LEFT JOIN contatos ON empresas.id_contato = contatos.id";
         $sql = $this->db->prepare($sql);
         $sql->execute();
         return $sql->fetchAll();
     }
 
-    public function buscaContatoEspecifico($id) {
-        $sql = "SELECT contatos.*, empresas.nome AS empresa, usuario.nome AS user FROM contatos LEFT JOIN empresas ON contatos.id_empresa = empresas.id JOIN usuario  WHERE contatos.id = '$id' AND usuario.id= contatos.id_user;";
+    public function buscaEmpresaEspecifica($id) {
+        $sql = "SELECT empresas.*, contatos.nome AS contato FROM empresas LEFT JOIN contatos ON empresas.id_contato = contatos.id JOIN usuario WHERE empresas.id = '$id' AND usuario.id = empresas.id_user";
         $sql = $this->db->prepare($sql);
         $sql->execute();
         return $sql->fetchAll();
     }
-
-    public function countEdit($id) {
-        $sql = "SELECT COUNT(*) as c FROM historico_contatos WHERE id_contato = '$id'";
+    public function countEdit($id){
+        $sql = "SELECT COUNT(*) as c FROM  historico_empresas WHERE id_empresa = '$id'";
         $sql = $this->db->prepare($sql);
         $sql->execute();
         return $sql->fetch();
     }
-
-    public function editaContato($array) {
-        if (is_array($array) && $array['id_contato'] > 0 && !empty($array['id_contato'])) {
+    
+    public function editaEmpresa($array) {
+        if (is_array($array) && $array['id_empresa'] > 0 && !empty($array['id_empresa'])) {
             extract($array);
             $nomeEdit = addslashes($nomeEdit);
 //            $empresa = addslashes($empresa);
-            if (empty($empresaEdit) || !isset($empresaEdit)) {
-                $empresaEdit = '';
+            if (empty($contatoEdit) || !isset($contatoEdit)) {
+                $contatoEdit = '';
             } else {
-                $empresaEdit = addslashes($empresaEdit);
+                $contatoEdit = addslashes($contatoEdit);
             }
             $cargoEdit = addslashes($cargoEdit);
 //            $tipoCell = addslashes($tipoCell);
@@ -154,29 +149,27 @@ class Contatos extends model {
             }
             $emailEdit = addslashes($emailEdit);
 //            $origem = addslashes($origem);
-            if (empty($origemEdit) || !isset($origemEdit)) {
-                $origemEdit = '';
-            } else {
-                $origemEdit = addslashes($origemEdit);
-            }
-            $cpfEdit = addslashes($cpfEdit);
-            $dataEdit = addslashes($dataEdit);
-            if (!empty($dataEdit)) {
-                $dataEdit = $this->formataHoraParaBanco($dataEdit);
-            }
+//            if (empty($origemEdit) || !isset($origemEdit)) {
+//                $origemEdit = '';
+//            } else {
+//                $origemEdit = addslashes($origemEdit);
+//            }
+            $cnpjEdit = addslashes($cnpjEdit);
+            $siteEdit = addslashes($siteEdit);
+            
             $enderecoEdit = addslashes($enderecoEdit);
             $observacaoEdit = addslashes($observacaoEdit);
             $id_user_edit = addslashes($id_user_edit);
-            $sql = "UPDATE contatos SET nome = '$nomeEdit', id_empresa = '$empresaEdit', cargo = '$cargoEdit', tipo_tel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipo_tel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipo_tel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', origem = '$origemEdit', cpf = '$cpfEdit', data_nascimento = '$dataEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit'   WHERE id = '$id_user_edit'";
+            $sql = "UPDATE empresas SET nome = '$nomeEdit', id_contato = '$contatoEdit', cargo = '$cargoEdit', tipotel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipotel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipotel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', site = '$siteEdit', cnpj = '$cnpjEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit' WHERE id = '$id_user_edit'";
             $sql = $this->db->prepare($sql);
             $sql->execute();
-
-            $id_contato = addslashes($id_contato);
+            
+            $id_empresa = addslashes($id_empresa);
             $data = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO historico_contatos VALUES('','$id_user_edit','$id_contato','','$data')";
+            $sql = "INSERT INTO historico_empresas VALUES('','$id_user_edit','$id_empresa','','$data')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
-
+            
             return TRUE;
         } else {
             return FALSE;

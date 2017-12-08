@@ -49,6 +49,7 @@ class Usuarios extends model {
                 $sql = "INSERT INTO usuario VALUES('','$data','$nome','$login','$senha','$email','$tipo')";
                 $sql = $this->db->prepare($sql);
                 $sql->execute();
+                $this->insereNegocioUser($this->db->lastInsertId());
                 return $this->db->lastInsertId();
             } else {
                 return FALSE;
@@ -56,6 +57,13 @@ class Usuarios extends model {
         }
     }
 
+     private function insereNegocioUser($id) {
+        $sql = "INSERT INTO negocio_user VALUES('','R$ 0,00','R$ 0,00','R$ 0,00','0','0','0','$id')";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $this->db->lastInsertId();
+    }
+    
     private function verificaLogin($login) {
         $sql = "SELECT COUNT(id) as c FROM usuario WHERE login = '$login'";
         $sql = $this->db->prepare($sql);

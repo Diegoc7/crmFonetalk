@@ -56,4 +56,42 @@ class notasController extends controller {
         }
     }
 
+    public function insereEmpresa() {
+//        print_r($_POST);
+        $notas = new Notas();
+        $retorno = $notas->adicionaEmpresa($_POST);
+        if ($retorno) {
+            echo json_encode($retorno);
+        } else {
+            echo json_encode('erro');
+        }
+    }
+
+    public function buscaEmpresa($id, $id_empresa) {
+//        echo $id_empresa;
+//        echo $id;
+        $notas = new Notas();
+        $retorno = $notas->buscaNotasEmpresa($id, $id_empresa);
+//        var_dump($retorno[1]);
+        if ($retorno) {
+            $passaArray = array();
+            $cont = 0;
+            foreach ($retorno[1] as $value) {
+                $passaArray[$cont]['id'] = (int) $value['id'];
+                $data = $value['data'];
+                $mostrarData = date('d/m/Y H:i:s', strtotime($data));
+                $passaArray[$cont]['data'] = $mostrarData;
+                $passaArray[$cont]['nota'] = $value['nota'];
+                $passaArray[$cont]['id_user'] = $value['id_user'];
+                $passaArray[$cont]['id_empresa'] = $value['id_empresa'];
+                $passaArray[$cont]['nome'] = $value['nome'];
+                $passaArray[$cont]['cont'] = $retorno[0];
+                $cont = $cont + 1;
+            }
+            echo json_encode($passaArray);
+        } else {
+            echo json_encode('erro');
+        }
+    }
+
 }

@@ -48,5 +48,39 @@ class Notas extends model {
             return FALSE;
         }
     }
+    public function adicionaEmpresa($array) {
+//        print_r($array);
+        if (isset($array) && is_array($array) && is_numeric($array['id_user']) && $array['id_user'] > 0 && is_numeric($array['id_client'])) {
+            extract($array);
+            $data = date("Y-m-d H:i:s");
+            $nota = addslashes($nota);
+            $sql = "INSERT INTO notas_empresa VALUES('','$data','$nota','$id_user','$id_client')";
+            $sql = $this->db->prepare($sql);
+            $sql->execute();
+            return $this->db->lastInsertId();
+        } else {
+            return FALSE;
+        }
+    }
+
+    public function buscaNotasEmpresa($id, $id_empresa) {
+        if (isset($id) && !empty($id) && isset($id_empresa) && !empty($id_empresa)) {
+            $sql = "SELECT notas_empresa.*, usuario.nome FROM notas_empresa JOIN usuario WHERE  notas_empresa.id_empresa = '$id_empresa' AND notas_empresa.id_user = usuario.id";
+//            $sql = "SELECT notas.*, usuario.nome FROM notas JOIN usuario WHERE notas.id_user = '$id' AND usuario.id = '$id' AND notas.id_client = '$id_client'";
+            $sql = $this->db->prepare($sql);
+            $sql->execute();
+            $count = $sql->rowCount();
+            $array = $sql->fetchAll();
+            $retorno = array(
+                $count,
+                $array
+            );
+//            var_dump($retorno);
+            return $retorno;
+//            return $sql->fetchAll();
+        } else {
+            return FALSE;
+        }
+    }
 
 }

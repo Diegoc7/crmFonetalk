@@ -94,5 +94,8 @@ class contatosController extends controller {
             echo json_encode('erro');
         }
     }
-
+    public function atividade(){
+        echo 'ok';
+        print_r($_POST);
+    }
 }

@@ -45,6 +45,8 @@ class Core {
 
         $c = new $currentController();
 
+//        var_dump($params);
+        
         call_user_func_array(array($c, $currentAction), $params);
 
 

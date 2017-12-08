@@ -136,7 +136,7 @@ session_start();
                     <!-- Sidebar Navidation Menus--><span class="heading">Principal</span>
                     <ul class="list-unstyled">
                         <li id="barIndex" > <a href="<?php echo BASE_URL ?>index.php"><i class="icon-home"></i>Inicio</a></li>
-                        <li > <a href="index.php"><i class="fa fa-money"></i>Négocios</a></li>
+                        <li id="bar_negocios" > <a href="<?php echo BASE_URL ?>negocios"><i class="fa fa-money"></i>Négocios</a></li>
             <!--            <li><a href="#dashvariants" aria-expanded="false" data-toggle="collapse"> <i class="icon-interface-windows"></i>Dropdown </a>
                           <ul id="dashvariants" class="collapse list-unstyled">
                             <li><a href="#">Page</a></li>
@@ -146,7 +146,7 @@ session_start();
                           </ul>
                         </li>-->
                         <li id="bar_contatos" > <a href="<?php echo BASE_URL ?>contatos"> <i class="icon-user"></i>Contatos </a></li>
-                        <li id="barEmpresas"> <a href="<?php echo BASE_URL ?>charts.html"> <i class="fa fa-building"></i>Empresas </a></li>
+                        <li id="bar_empresas"> <a href="<?php echo BASE_URL ?>empresas"> <i class="fa fa-building"></i>Empresas </a></li>
                         <li id="barRelatorio"> <a href="<?php echo BASE_URL ?>forms.html"> <i class="fa fa-file"></i>Relatório </a></li>
                         <!--<li> <a href="login.html"> <i class="icon-interface-windows"></i>Login Page</a></li>-->
                     </ul><span class="heading">Extras</span>
@@ -249,6 +249,7 @@ session_start();
         <script src="<?php echo BASE_URL ?>assets/vendor/jquery.cookie/jquery.cookie.js"></script>
         <script src="<?php echo BASE_URL ?>assets/vendor/jquery-validation/jquery.validate.min.js"></script>
         <script src="<?php echo BASE_URL ?>assets/vendor/bootstrap/js/jquery.mask.min.js"></script>
+        <script src="http://plentz.github.io/jquery-maskmoney/javascripts/jquery.maskMoney.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
         <script src="<?php echo BASE_URL ?>assets/js/charts-home.js"></script>
         <script src="<?php echo BASE_URL ?>assets/js/front.js"></script>
