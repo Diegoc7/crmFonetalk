@@ -11,7 +11,7 @@
  *
  * @author Diego
  */
-class Atividades extends modal{
+class Atividades extends model{
     //put your code here
     public function insereAtividade($array){
         

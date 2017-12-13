@@ -389,12 +389,12 @@
                                 </div>
                                 <div class="card">
                                     <div class="card-header">
-                                        <a class="collapsed card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+                                        <a  class="collapsed card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
                                             Négocios
                                         </a>
                                     </div>
                                     <div id="collapseTwo" class="collapse">
-                                        <div class="card-body">
+                                        <div id="writeBusiness" class="card-body">
                                             Sem Négocios
                                         </div>
                                     </div>
@@ -424,7 +424,7 @@
                                         </a>
                                     </div>
                                     <div id="collapseThree" class="collapse">
-                                        <div class="card-body">
+                                        <div id="mostraArquivos" class="card-body">
                                             Sem Arquivos
                                         </div>
                                     </div>
@@ -435,19 +435,19 @@
                         <div class="col-md-7 col-md-offset-5">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Notas</a>
+                                    <a class="nav-link " href="#profile" role="tab" data-toggle="tab">Notas</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Editar</a>
+                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Anexar Arquivos</a>
                                 </li>
                             </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active" id="profile">
+                                <div role="tabpanel" class="tab-pane fade  " id="profile">
                                     <br/>
                                     <div class="line"></div>
                                     <textarea id="nova_nota" class="form-control" placeholder="Insira uma nota"></textarea>
@@ -520,7 +520,16 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="references">ccc</div>
+                                <div role="tabpanel" class="tab-pane fade" id="references">
+                                     <form class="form-insert-file-company" method="POST" action="arquivos/anexar" enctype="multipart/form-data">
+                                         <label class="label label-default label-material"><strong>Insira um arquivo de até 4 MB </strong></label>
+                                        <input type="file" name="arquivo" class="form-control btn btn-primary" /><br/><br/>
+                                        <input type="hidden" name="tipo" value="empresas" />
+                                        <input type="hidden" name="id" id="id_empresa_arquivo" />
+                                        <button type="submit" id="btn_send_form" class="btn btn-primary"> Enviar</button>
+                                    </form>
+                                    <hr/>
+                                </div>
                             </div>
                             <div id="writeNotes">
 

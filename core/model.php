@@ -22,10 +22,14 @@ class model {
 
     protected function formataHoraParaBanco($data) {
 //    $data = '21/01/2017';
-        $aux = explode('/', $data);
+        if (strstr($data, '/')) {
+            $aux = explode('/', $data);
 //    var_dump($aux);
-        $dataModificada = $aux[2] . "/" . $aux[1] . "/" . $aux[0];
-        return $dataModificada;
+            $dataModificada = $aux[2] . "/" . $aux[1] . "/" . $aux[0];
+            return $dataModificada;
+        }else{
+            return $data;
+        }
     }
 
     protected function valorConta($valor) {
@@ -36,7 +40,8 @@ class model {
         return $valor;
     }
 
-    protected function valorPadraoBr($valor){
+    protected function valorPadraoBr($valor) {
         return 'R$ ' . number_format($valor, 2, ',', '.');
     }
+
 }

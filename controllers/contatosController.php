@@ -38,6 +38,7 @@ class contatosController extends controller {
     public function contatoUnico($id) {
         if (isset($id) && !empty($id) && $id > 0 && is_numeric($id)) {
             $contatos = new Contatos();
+            
             $retorno = $contatos->buscaContatoEspecifico($id);
             if ($retorno) {
 //                var_dump($retorno);
@@ -74,6 +75,7 @@ class contatosController extends controller {
                     $passaArray[$cont]['empresa'] = $value['empresa'];
                     $passaArray[$cont]['user'] = $value['user'];
                     $passaArray[$cont]['contEdit'] = $contatos->countEdit($id)['c'];
+//                    $passaArray[$cont]['nomeNegocios'] = $retornoNegocio;
 
                     $cont = $cont + 1;
                 }

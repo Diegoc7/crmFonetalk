@@ -5,6 +5,7 @@
  */
 
 var ver = $('.divTabela').html();
+var session_id_user = $('#session_id_user').val();
 $(document).ready(function () {
     $('#addUser').tooltip();
     $('.tell2').css('display', 'none');
@@ -13,7 +14,7 @@ $(document).ready(function () {
     $('.tell3Edit').css('display', 'none');
     $("body").fadeIn(1500);
 
-   
+
 
     var url = location.href;
     url = url.split("http://192.168.1.61/crmFonetalk/"); //quebra o endeço de acordo com a / (barra)
@@ -21,6 +22,7 @@ $(document).ready(function () {
     url = url[1].replace('#', '');
     if (url == 'index.php' || url == 'index' || url == '') {
         $('#barIndex').addClass('active');
+        buscaInfoNegociosUser(session_id_user);
     } else {
         $('#bar_' + url).addClass('active');
 
@@ -32,9 +34,10 @@ $(document).ready(function () {
         } else if (url == 'empresas') {
             carregaEmpresas();
             carregaContatosSelect();
-        }else if (url == 'negocios') {
+        } else if (url == 'negocios') {
             carregaContatosSelect();
             carregaEmpresasSelect();
+            carregaNegocios();
         }
     }
     $('.dataFormato').datepicker({
@@ -48,7 +51,8 @@ $(document).ready(function () {
     $('.dataFormato').mask("99/99/9999");
     $('.cpfFormato').mask("999.999.999-99");
     $('.cnpjFormato').mask("99.999.999/9999-99");
-     $("#valor").maskMoney();
+    $("#valor").maskMoney();
+    $("#valorEdit").maskMoney();
     console.log(url);
 
 
@@ -63,7 +67,50 @@ $(document).ready(function () {
             };
 
     $('.telFormato').mask(SPMaskBehavior, spOptions);
+
+    $("#arquivo").change(function () {
+        var fileInput = $(this);
+        var maxSize = $(this).data('max-size');
+//        console.log(fileInput.get(0).files[0].size);
+        //aqui a sua função normal
+        if (fileInput.get(0).files.length) {
+            var fileSize = fileInput.get(0).files[0].size; // in bytes
+            if (fileSize > maxSize) {
+                alert('Tamanho do arquivo acima de 4MB');
+                return false;
+            } else {
+                //alert('file size is correct- ' + fileSize + ' bytes');
+            }
+        } else {
+            alert('choose file, please');
+            return false;
+        }
+    });
 });
+
+function buscaInfoNegociosUser(id) {
+    $.ajax({
+        type: 'POST',
+        url: 'http://192.168.1.61/crmFonetalk/negocios/buscaInfoNegocioUser/' + id,
+        cache: false,
+        dataType: 'json',
+        success: function (json) {
+            console.log(json);
+            $('#negociacoesPerdidas').html(json['perdido']);
+            $('#barNegociacoesPerdidas').prop('style', 'width: ' + json['porcPerdido'] + '%; height: 4px;');
+            $('#negociacoesGanhas').html(json['ganho']);
+            $('#barNegociacoesGanhas').prop('style', 'width: ' + json['porcGanho'] + '%; height: 4px;');
+            $('#negociacoesAtuais').html(json['atual']);
+            $('#barNegociacoesAtuais').prop('style', 'width: ' + json['porcAtual'] + '%; height: 4px;');
+            $('#porcPerda').html(json['porcPerdido'] + ' %');
+            $('#porcGanho').html(json['porcGanho'] + ' %');
+            $('#porcAberta').html(json['porcAtual'] + ' %');
+        },
+        error: function (e) {//executa se der erro em algum lugar
+            alert("erro ao buscar" + e);
+        }
+    });
+}
 $("#tipoCell").on('change', function (e) {
     var val = $(this).val();
     if (val != '') {
@@ -228,6 +275,7 @@ function abreForm() {
         scrollTop: $('.forms').offset().top
     }, 1000);
     $('#addUser').hide('slow');
+    $('.edit').slideUp('slow');
 }
 function fechaForm() {
     $('.forms').slideUp('slow');
@@ -429,8 +477,11 @@ function mostraContato(id) {
     if (id != '' && id > 0) {
         var id_user = $("[name=id_user]").val();
         console.log(id_user);
+        $('#id_contato_arquivo').val(id);
         buscaNotas(id, id_user);
         buscaInfoContato(id);
+        buscaNegociosIdContato(id);
+        buscaArquivosContato(id);
         $('#modalContato').modal('show');
     }
 
@@ -504,6 +555,28 @@ function mostraContato(id) {
 
     }
 
+    function buscaNegociosIdContato(id) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.61/crmFonetalk/negocios/buscaNomeContatoID/' + id,
+            cache: false,
+            dataType: 'json',
+            success: function (json) {
+                console.log(json);
+                if (json != '') {
+                    $('#writeBusiness').html('');
+                    json.forEach(montaEscreveNegocio);
+                }
+            },
+            error: function (e) {//executa se der erro em algum lugar
+                alert("erro ao buscar" + e);
+            }
+        });
+    }
+    function montaEscreveNegocio(value, index, ar) {
+        $('#writeBusiness').append(value.nome + '<br/>');
+    }
+
     function buscaInfoContato(id) {
         if (id != '') {
             $.ajax({
@@ -546,6 +619,85 @@ function mostraContato(id) {
         $('#mostrarTell3').html(value.telefone3);
         $('#mostrarObs').html(value.observacao);
         $('#contEdit').html(value.contEdit);
+    }
+
+    $(function () {
+        $('.form-insert-file-contact').bind('submit', function (e) {
+            e.preventDefault();
+
+            var data;
+            var contentType = "application/x-www-form-urlencoded";
+            var processData = true;
+            if ($(this).attr('enctype') == 'multipart/form-data') {
+                data = new FormData($('.form-insert-file-contact').get(0));//seleciona classe form-horizontal adicionada na tag form do html
+
+                contentType = false;
+                processData = false;
+            } else {
+                data = $(this).serialize();
+            }
+//        console.log(data);
+            $.ajax({
+                data: data,
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                contentType: contentType,
+                processData: processData,
+                beforeSend: function (xhr) {
+                    $('#modalCarregar').modal('show');
+                },
+                success: function (json) {
+                    setTimeout(function () {
+                        $('#modalCarregar').modal('hide');
+                    }, 500);
+                    if (json === 'erro') {
+                        setTimeout(function () {
+                            $('#modalError').modal('show');
+                        }, 1000);
+                    } else {
+                        $('.form-insert-file-contact')[0].reset();
+
+                        buscaArquivosContato(id);
+                    }
+                },
+                error: function (exr, sender) {
+                    alert('error');
+                }
+            });
+
+        });
+
+    });
+
+
+    function buscaArquivosContato(id) {
+        if (id != '') {
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.61/crmFonetalk/arquivos/busca/' + id + '/contatos',
+//                url: 'http://192.168.0.126/crm/contatos/contatoUnico/' + id,
+//                data: passar,
+                cache: false,
+                dataType: 'json',
+                success: function (json) {
+//                    $('#contNotas').html('0');
+//                     $('#writeNotes').html('');
+                    console.log(json);
+                    if (json != 'erro') {
+                        $('#mostraArquivos').html('');
+                        json.forEach(montaDadosArquivos);
+                    }
+                },
+                error: function (e) {//executa se der erro em algum lugar
+                    alert("erro ao buscar" + e);
+                }
+            });
+        }
+    }
+
+    function montaDadosArquivos(value, index, ar) {
+        $('#mostraArquivos').append('<a href="http://192.168.1.61/crmFonetalk/' + value.caminho + '">' + value.nome + '</a>');
+
     }
 }
 
@@ -841,6 +993,7 @@ function editEmpresa(id) {
             dataType: 'json',
             beforeSend: function (xhr) {
                 $('.forms').slideUp('slow');
+                $('#addUser').show('slow');
             },
             success: function (json) {
                 console.log(json);
@@ -947,7 +1100,10 @@ function mostraEmpresa(id) {
         console.log(id_user);
         buscaNotas(id, id_user);
         buscaInfoContato(id);
+        buscaNegociosIdEmpresa(id);
+        buscaArquivosEmpresas(id);
         $('#modalEmpresa').modal('show');
+        $('#id_empresa_arquivo').val(id);
     }
 
 
@@ -1020,6 +1176,30 @@ function mostraEmpresa(id) {
 
     }
 
+    function buscaNegociosIdEmpresa(id) {
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.61/crmFonetalk/negocios/buscaNomeEmpresaID/' + id,
+            cache: false,
+            dataType: 'json',
+            success: function (json) {
+                console.log(json);
+                if (json != '') {
+                    $('#writeBusiness').html('');
+                    json.forEach(montaEscreveNegocio);
+                }
+
+            },
+            error: function (e) {//executa se der erro em algum lugar
+                alert("erro ao buscar" + e);
+            }
+        });
+    }
+    function montaEscreveNegocio(value, index, ar) {
+        $('#writeBusiness').append(value.nome + '<br/>');
+    }
+
+
     function buscaInfoContato(id) {
         if (id != '') {
             $.ajax({
@@ -1063,4 +1243,447 @@ function mostraEmpresa(id) {
         $('#mostrarObs').html(value.observacao);
         $('#contEdit').html(value.contEdit);
     }
+
+    $(function () {
+        $('.form-insert-file-company').bind('submit', function (e) {
+//        $('.form-insert-file-company').bind('submit', function (e) {
+            e.preventDefault();
+
+            var data;
+            var contentType = "application/x-www-form-urlencoded";
+            var processData = true;
+            if ($(this).attr('enctype') == 'multipart/form-data') {
+                data = new FormData($('.form-insert-file-company').get(0));//seleciona classe form-horizontal adicionada na tag form do html
+
+                contentType = false;
+                processData = false;
+            } else {
+                data = $(this).serialize();
+            }
+//        console.log(data);
+            $.ajax({
+                data: data,
+                type: $(this).attr('method'),
+                url: $(this).attr('action'),
+                contentType: contentType,
+                processData: processData,
+                beforeSend: function (xhr) {
+                    $('#modalCarregar').modal('show');
+                },
+                success: function (json) {
+                    setTimeout(function () {
+                        $('#modalCarregar').modal('hide');
+                    }, 500);
+                    if (json === 'erro') {
+                        setTimeout(function () {
+                            $('#modalError').modal('show');
+                        }, 1000);
+                    } else {
+                        $('.form-insert-file-company')[0].reset();
+
+                        buscaArquivosEmpresas(id);
+                    }
+                },
+                error: function (exr, sender) {
+                    alert('error');
+                }
+            });
+
+        });
+
+    });
+
+
+    function buscaArquivosEmpresas(id) {
+        if (id != '') {
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.61/crmFonetalk/arquivos/busca/' + id + '/empresas',
+//                url: 'http://192.168.0.126/crm/contatos/contatoUnico/' + id,
+//                data: passar,
+                cache: false,
+                dataType: 'json',
+                success: function (json) {
+//                    $('#contNotas').html('0');
+//                     $('#writeNotes').html('');
+                    console.log(json);
+                    if (json != 'erro') {
+                        $('#mostraArquivos').html('');
+                        json.forEach(montaDadosArquivos);
+                    }
+                },
+                error: function (e) {//executa se der erro em algum lugar
+                    alert("erro ao buscar" + e);
+                }
+            });
+        }
+    }
+
+    function montaDadosArquivos(value, index, ar) {
+        $('#mostraArquivos').append('<a href="http://192.168.1.61/crmFonetalk/' + value.caminho + '">' + value.nome + '</a>');
+
+    }
+
 }
+
+
+
+$('#form-insert-business').bind('submit', function (e) {
+    e.preventDefault();
+    var txt = $(this).serialize();
+    console.log(txt);
+    $.ajax({
+        type: 'POST',
+        url: 'negocios/insere',
+        data: txt,
+//        dataType: 'json',
+        beforeSend: function (x) {
+            $('#modalCarregar').modal('show');
+//            alteraModal();
+        },
+        success: function (json) {
+            console.log(json);
+            setTimeout(function () {
+                $('#modalCarregar').modal('hide');
+            }, 500);
+            if (json === 'erro') {
+                setTimeout(function () {
+                    $('#modalError').modal('show');
+                }, 1000);
+            } else {
+                $('#form-insert-business')[0].reset();
+                $(".selectpicker").val('default');
+                $(".selectpicker").selectpicker("refresh");
+                setTimeout(function () {
+                    $('#modalOK').modal('show');
+                }, 1000);
+                carregaNegocios();
+            }
+
+        },
+
+        error: function () {//executa se der erro em algum lugar
+            $('#modalCarregar').modal('hide');
+            setTimeout(function () {
+                $('#modalError').modal('show');
+            }, 1000);
+        }
+    });
+});
+
+
+function carregaNegocios() {
+    $.ajax({
+        type: 'POST',
+        url: 'negocios/buscaTabela',
+        cache: false,
+        dataType: 'json',
+        beforeSend: function () {
+        },
+        success: function (json) {
+//            console.log(json);
+            $('.divTabela').html(ver);
+            if (json != 'vazio') {
+                $('.tabela').find('tbody').html('');
+                json.forEach(montaTabelaNegocios);
+            }
+            $('.tabela').DataTable({
+                "aaSorting": [[0, "asc"]],
+                "oLanguage": {
+                    "sLengthMenu": "Mostrando _MENU_ registros",
+                    "sZeroRecords": "Nenhum registro encontrado",
+                    "sInfo": "Mostrando _START_ / _END_ de _TOTAL_ registro(s)",
+                    "sInfoEmpty": "Mostrando 0 / 0 de 0 registros",
+                    "sInfoFiltered": "(filtrado de _MAX_ registros)",
+                    "sSearch": "Pesquisar: ",
+                    "oPaginate": {
+                        "sFirst": "Início",
+                        "sPrevious": "Anterior",
+                        "sNext": "Próximo",
+                        "sLast": "Último"
+                    }
+                }
+            });
+        },
+        error: function (e) {//executa se der erro em algum lugar
+            alert("Ocorreu um erro" + e);
+        }
+    });
+}
+
+function montaTabelaNegocios(value, index, ar) {
+    var cor = '';
+    var contato = '';
+    var empresa = '';
+    var usuario = '';
+    if (value.status == 'Aberto') {
+        cor = 'class="table-primary"';
+    } else if (value.status == 'Ganhou') {
+        cor = 'class="table-success"';
+    } else if (value.status == 'Perdido') {
+        cor = 'class="table-danger"';
+    }
+    if (value.contato == null) {
+        contato = ' ';
+    } else {
+        contato = value.contato;
+    }
+    if (value.empresa == null) {
+        empresa = ' ';
+    } else {
+        empresa = value.empresa;
+    }
+    if (value.usuario == null) {
+        usuario = ' ';
+    } else {
+        usuario = value.usuario;
+    }
+//    var btnRelatorio = '<a class="btndeleta btn btn-primary btn-sm" href="http://192.168.0.126/crm/contatos/contato/'+value.id+'"  ><i class="fa fa-eye"></i></a>';
+    var btnRelatorio = '<button class="btndeleta btn btn-primary btn-sm" onclick="mostraNegocios(' + value.id + ');"  ><i class="fa fa-eye"></i></button>';
+    var btnEdit = '<button class="btnedit btn btn-secondary btn-sm" onclick="editNegocios(' + value.id + ');"  ><i class="fa fa-edit"></i></button>';
+//    var btnEdit = '<button class="btnedit btn btn-secondary btn-sm" onclick="edit(' + value.id + ', "\ '+value.nome+' "\, "", "", "", "", "", "", "", "", "", "", "", "", "");"  ><i class="fa fa-edit"></i></button>';
+    $('.tabela').find('tbody').append(
+            '<tr><td ' + cor + ' >' + value.nome + '</td><td ' + cor + '>' + value.valor + '</td><td ' + cor + '>' + empresa + '</td><td ' + cor + '>' + contato + '</td><td ' + cor + '>' + usuario + '</td><td ' + cor + '>' + btnRelatorio + ' ' + btnEdit + ' </td></tr>'
+            );
+}
+
+var modalNegocios = $('#modalNegocios').html();
+function mostraNegocios(id) {
+    $('#modalNegocios').html(modalNegocios);
+    $('#assunto').addClass('input-material');
+    $('#tipoAtividade').addClass('selectpicker');
+    $('#tipoAtividade').selectpicker('refresh');
+    $('#tipoNegocios').addClass('selectpicker');
+    $('#tipoNegocios').selectpicker('refresh');
+    if (id != '' && id > 0) {
+        var id_user = $("[name=id_user]").val();
+        console.log(id_user);
+        BuscaHistNegocios(id, id_user);
+        buscaNegocio(id);
+        $('#modalNegocios').modal('show');
+    }
+
+
+    $('[name=id_empresa]').val('');
+    $('[name=id_empresa]').val(id);
+
+    $('#btnEnviarNota').on('click', function () {
+        var nota = $('#nova_nota').val();
+        var id_user = $("[name=id_user]").val();
+        var id_client = $("[name=id_empresa]").val();
+        console.log(id_client);
+        if (nota != '' && id_user != '' && id_client != '') {
+            var passar = 'id_user=' + id_user + '&nota=' + nota + '&id_client=' + id_client;
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.61/crmFonetalk/notas/insereEmpresa',
+//                url: 'http://192.168.0.126/crm/notas/insereEmpresa',
+                data: passar,
+                cache: false,
+                dataType: 'json',
+                success: function (json) {
+                    console.log(json);
+                    if (json != 'erro') {
+//                        $('#modalOK').modal('show');
+                        $('#nova_nota').val('');
+                        buscaNotas(id_client, id_user);
+                    }
+                },
+                error: function (e) {//executa se der erro em algum lugar
+                    alert("Ocorreu um erro" + e);
+                }
+            });
+        }
+
+    });
+
+    function BuscaHistNegocios(id) {
+        if (id_user != '') {
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.61/crmFonetalk/negocios/buscaNegocioHistorico/' + id,
+//                url: 'http://192.168.0.126/crm/notas/buscaEmpresa/' + id_user + '/' + id,
+//                data: passar,
+                cache: false,
+                dataType: 'json',
+                success: function (json) {
+                    $('#contNotas').html('0');
+                    $('#writeNotes').html('');
+                    console.log(json);
+                    if (json != 'erro') {
+                        json.forEach(montaHistorico);
+                    }
+                },
+                error: function (e) {//executa se der erro em algum lugar
+                    alert("erro ao buscar" + e);
+                }
+            });
+        }
+    }
+
+    function montaHistorico(value, index, ar) {
+        console.log(value.situacao);
+        if (value.situacao == 'create') {
+            $('#dateCreate').html(value.data);
+            $('#userCreate').html(value.usuario);
+            $('#valorCreate').html(value.valor);
+            $('#faseCreate').html(value.fase);
+            $('#statusCreate').html(value.status);
+        } else {
+            console.log('chegou aqui');
+            var classe = '';
+            if (value.status == 'Aberto') {
+                classe = 'info';
+            } else if (value.status == 'Ganhou') {
+                classe = 'success';
+            } else if (value.status == 'Perdido') {
+                classe = 'danger';
+            }
+            var texto = 'Previsão :' + value.previsao + '<br/>\n\
+            Fase: ' + value.fase + '<br/> Valor: ' + value.valor;
+            var cabecalho = '<div class="card border border-' + classe + ' alert alert-' + classe + '" ><h3 class="card-header alert alert-' + classe + '">Négocio ' + value.nome + '</h3>';
+            var corpo = '<div class="card-body"><h4 class="card-title">Editado ás ' + value.data + '</h4>';
+            var corpo2 = '<p class="card-text">' + texto + '</p> </div>';
+            var rodape = '<div class="card-footer">por: ' + value.usuario + '</div></div><hr/>';
+
+            $('#writeNotes').append(cabecalho + '' + '' + corpo + '' + corpo2 + '' + rodape);
+        }
+//        $('#writeNotes').html(cabecalho+''+''+corpo+''+corpo2+''+rodape);
+
+    }
+
+    function buscaNegocio(id) {
+        if (id != '') {
+            $.ajax({
+                type: 'POST',
+                url: 'http://192.168.1.61/crmFonetalk/negocios/buscaNegocio/' + id,
+//                url: 'http://192.168.0.126/crm/empresas/empresaUnica/' + id,
+//                data: passar,
+                cache: false,
+                dataType: 'json',
+                success: function (json) {
+//                    $('#contNotas').html('0');
+//                     $('#writeNotes').html('');
+                    console.log(json);
+                    if (json != 'erro') {
+                        json.forEach(montaDadosNegocios);
+                    }
+                },
+                error: function (e) {//executa se der erro em algum lugar
+                    alert("erro ao buscar" + e);
+                }
+            });
+        }
+    }
+
+    function montaDadosNegocios(value, index, ar) {
+        $('#nome_negocio').html(value.nome);
+        $('#mostraValor').html(value.valor);
+        $('#mostraFase').html(value.fase);
+        $('#mostraPrevisao').html(value.previsao);
+        $('#mostraStatus').html(value.status);
+        $('#mostraEmpresa').html(value.empresa);
+        $('#mostraContato').html(value.contato);
+//        $('#mostraOrigem').html(value.origem);
+//        $('#mostraDataNascimento').html(value.data_nascimento);
+//        $('#dateCreate').html(value.data);
+//        $('#userCreate').html(value.user);
+//        $('#mostraEmpresa').html(value.empresa);
+//        $('#mostrarTipoTell2').html(value.tipotel2);
+//        $('#mostrarTell2').html(value.telefone2);
+//        $('#mostrarTipoTell3').html(value.tipotel3);
+//        $('#mostrarTell3').html(value.telefone3);
+//        $('#mostrarObs').html(value.observacao);
+//        $('#contEdit').html(value.contEdit);
+    }
+}
+
+function editNegocios(id) {
+//    console.log(nome);
+    if (id != '') {
+        $.ajax({
+            type: 'POST',
+            url: 'http://192.168.1.61/crmFonetalk/negocios/negocioUnico/' + id,
+//            url: 'http://192.168.0.126/crm/empresasempresaUnica/' + id,
+//                data: passar,
+            cache: false,
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                $('.forms').slideUp('slow');
+                $('#addUser').show('slow');
+            },
+            success: function (json) {
+                console.log(json);
+                if (json != 'erro') {
+                    json.forEach(montaEditNegocio);
+                    $('.edit').slideDown('slow');
+                    $('html, body').animate({
+                        scrollTop: $('.edit').offset().top
+                    }, 1000);
+                }
+            },
+            error: function (e) {//executa se der erro em algum lugar
+                alert("erro ao buscar" + e);
+            }
+        });
+    }
+    function montaEditNegocio(value, index, ar) {
+//        console.log(value.id);
+        $('#id_negocio').val(value.id);
+        $('#nomeEdit').val(value.nome);
+        $('#contatoEdit').selectpicker('val', value.id_contato);
+        $('#empresaEdit').selectpicker('val', value.id_empresa);
+        $('#faseEdit').selectpicker('val', value.fase);
+        $('#statusEdit').selectpicker('val', value.status);
+        $('#valorEdit').val(value.valor);
+        $('#dataPrevisaoEdit').val(value.previsao);
+
+    }
+}
+
+$('#form-edit-business').bind('submit', function (e) {
+    e.preventDefault();
+    var txt = $(this).serialize();
+    console.log(txt);
+    $.ajax({
+        type: 'POST',
+        url: 'negocios/edita',
+        data: txt,
+//        dataType: 'json',
+        beforeSend: function (x) {
+            $('#modalCarregar').modal('show');
+//            alteraModal();
+        },
+        success: function (json) {
+            console.log(json);
+            setTimeout(function () {
+                $('#modalCarregar').modal('hide');
+            }, 500);
+            if (json === 'erro') {
+                setTimeout(function () {
+                    $('#modalError').modal('show');
+                }, 1000);
+            } else {
+                $('#form-edit-business')[0].reset();
+                $(".selectpicker").val('default');
+                $(".selectpicker").selectpicker("refresh");
+                $(".edit").slideUp('slow');
+                setTimeout(function () {
+                    $('#modalOK').modal('show');
+                }, 1000);
+//                $('#modalOK').modal('show');
+//                carregaUsuarios();
+                carregaNegocios();
+            }
+
+        },
+
+        error: function () {//executa se der erro em algum lugar
+            $('#modalCarregar').modal('hide');
+            setTimeout(function () {
+                $('#modalError').modal('show');
+            }, 1000);
+        }
+    });
+});
+

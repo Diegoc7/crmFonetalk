@@ -43,6 +43,7 @@ session_start();
             <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
     </head>
     <body style="display: none;">
+        <input type="hidden" id="session_id_user" value="<?php echo $_SESSION['ID'] ?>" />
         <div class="page home-page">
             <!-- Main Navbar-->
             <header class="header">

@@ -426,7 +426,7 @@
                                         </a>
                                     </div>
                                     <div id="collapseTwo" class="collapse">
-                                        <div class="card-body">
+                                        <div id="writeBusiness" class="card-body">
                                             Sem Négocios
                                         </div>
                                     </div>
@@ -456,7 +456,7 @@
                                         </a>
                                     </div>
                                     <div id="collapseThree" class="collapse">
-                                        <div class="card-body">
+                                        <div id="mostraArquivos" class="card-body">
                                             Sem Arquivos
                                         </div>
                                     </div>
@@ -467,19 +467,19 @@
                         <div class="col-md-7 col-md-offset-5">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Notas</a>
+                                    <a class="nav-link " href="#profile" role="tab" data-toggle="tab">Notas</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Editar</a>
+                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Anexar Arquivos</a>
                                 </li>
                             </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
-                                <div role="tabpanel" class="tab-pane fade in active" id="profile">
+                                <div role="tabpanel" class="tab-pane fade  " id="profile">
                                     <br/>
                                     <div class="line"></div>
                                     <textarea id="nova_nota" class="form-control" placeholder="Insira uma nota"></textarea>
@@ -552,7 +552,16 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="references">ccc</div>
+                                <div role="tabpanel" class="tab-pane fade" id="references">
+                                    <form class="form-insert-file-contact" method="POST" action="arquivos/anexar" enctype="multipart/form-data">
+                                        <label class="label label-default label-material">Insira um arquivo de até 4 MB </label>
+                                        <input type="file" name="arquivo" class="form-control btn btn-primary" /><br/><br/>
+                                        <input type="hidden" name="tipo" value="contatos" />
+                                        <input type="hidden" name="id" id="id_contato_arquivo" />
+                                        <button type="submit" id="btn_send_form" class="btn btn-primary"> Enviar</button>
+                                    </form>
+                                    <hr/>
+                                </div>
                             </div>
                             <div id="writeNotes">
 
@@ -570,32 +579,7 @@
                                     por: <span id="userCreate"></span>
                                 </div>
                             </div>
-                            <!--</div>-->
-
-                            <!--                            <div class="card border border-success" >
-                                                            <h3 class="card-header ">
-                                                                Atividade
-                                                            </h3>
-                                                            <div class="card-body">
-                                                                <h4 class="card-title">Inserida ás 12/09/2011 13:49:21</h4>
-                                                                <p class="card-text">Best ugg boots on the planet. Free shipping, 24/7 customer service.</p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                por: Administração
-                                                            </div>
-                                                        </div>
-                                                        <div class="card border border-danger" >
-                                                            <h3 class="card-header ">
-                                                                Atividade 
-                                                            </h3>
-                                                            <div class="card-body">
-                                                                <h4 class="card-title">Inserida ás 12/09/2011 13:49:21</h4>
-                                                                <p class="card-text">Best ugg boots on the planet. Free shipping, 24/7 customer service.</p>
-                                                            </div>
-                                                            <div class="card-footer">
-                                                                por: Administração
-                                                            </div>
-                                                        </div>-->
+                          
                         </div>
                         <!--<div class="container-fluid">-->
                         <div class="col-lg-12">

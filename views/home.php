@@ -4,50 +4,51 @@
         <div class="row bg-white has-shadow">
             <!-- Item -->
             <div class="col-xl-3 col-sm-6">
+               
                 <div class="item d-flex align-items-center">
-                    <div class="icon bg-violet"><i class="icon-user"></i></div>
-                    <div class="title"><span>Novos<br>Clientes</span>
+                    <div class="icon bg-warning"><i class="icon-user"></i></div>
+                    <div class="title"><span>Clientes</span>
                         <div class="progress">
-                            <div role="progressbar" style="width: 25%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-violet"></div>
+                            <div role="progressbar" style="width: 100%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-warning"></div>
                         </div>
                     </div>
-                    <div class="number"><strong>25</strong></div>
+                    <div class="number" ><strong id="numeroCliente">25</strong></div>
                 </div>
             </div>
             <!-- Item -->
             <div class="col-xl-3 col-sm-6">
                 <div class="item d-flex align-items-center">
-                    <div class="icon bg-red"><i class="icon-padnote"></i></div>
-                    <div class="title"><span>Negociações<br>Canceladas</span>
+                    <div class="icon bg-red"><i class="fa fa-money"></i></div>
+                    <div class="title"><span >Perdidas</span>
                         <div class="progress">
-                            <div role="progressbar" style="width: 70%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
+                            <div role="progressbar" id="barNegociacoesPerdidas" style="width: 0%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-red"></div>
                         </div>
                     </div>
-                    <div class="number"><strong>70</strong></div>
+                    <div class="number"><strong id="negociacoesPerdidas">0</strong></div>
                 </div>
             </div>
             <!-- Item -->
             <div class="col-xl-3 col-sm-6">
                 <div class="item d-flex align-items-center">
-                    <div class="icon bg-green"><i class="icon-bill"></i></div>
-                    <div class="title"><span>Negociações<br>Aceitas</span>
+                    <div class="icon bg-green"><i class="fa fa-money"></i></div>
+                    <div class="title"><span>Aceitas</span>
                         <div class="progress">
-                            <div role="progressbar" style="width: 40%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
+                            <div role="progressbar" id="barNegociacoesGanhas" style="width: 40%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-green"></div>
                         </div>
                     </div>
-                    <div class="number"><strong>40</strong></div>
+                    <div class="number"><strong id="negociacoesGanhas">0</strong></div>
                 </div>
             </div>
             <!-- Item -->
             <div class="col-xl-3 col-sm-6">
                 <div class="item d-flex align-items-center">
-                    <div class="icon bg-orange"><i class="icon-check"></i></div>
-                    <div class="title"><span>Negociações<br>Abertas</span>
+                    <div class="icon bg-blue"><i class="fa fa-money"></i></div>
+                    <div class="title"><span>Abertas</span>
                         <div class="progress">
-                            <div role="progressbar" style="width: 50%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-orange"></div>
+                            <div role="progressbar" id="barNegociacoesAtuais" style="width: 50%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-blue"></div>
                         </div>
                     </div>
-                    <div class="number"><strong>50</strong></div>
+                    <div class="number"><strong id="negociacoesAtuais">0</strong></div>
                 </div>
             </div>
         </div>
@@ -86,8 +87,16 @@
                                                     </div>-->
                 <!-- Numbers-->
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
+                    <div class="icon bg-danger"><i class="fa fa-line-chart"></i></div>
+                    <div class="text"><strong id="porcPerda">39.9%</strong><br><small>Perdas</small></div>
+                </div>
+                <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-green"><i class="fa fa-line-chart"></i></div>
-                    <div class="text"><strong>39.9%</strong><br><small>Successo</small></div>
+                    <div class="text"><strong id="porcGanho">39.9%</strong><br><small>Ganhos</small></div>
+                </div>
+                <div class="statistic d-flex align-items-center bg-white has-shadow">
+                    <div class="icon bg-blue"><i class="fa fa-line-chart"></i></div>
+                    <div class="text"><strong id="porcAberta">39.9%</strong><br><small>Abertos</small></div>
                 </div>
             </div>
         </div>
