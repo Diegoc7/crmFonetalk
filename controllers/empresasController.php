@@ -14,6 +14,7 @@
 class empresasController extends controller{
     //put your code here
     public function index() {
+        $this->validaSessao();
         $dados = array();
         $this->loadTemplate('empresas', $dados);
     }
@@ -70,6 +71,7 @@ class empresasController extends controller{
                     $passaArray[$cont]['endereco'] = $value['endereco'];
                     $passaArray[$cont]['observacao'] = $value['observacao'];
                     $passaArray[$cont]['contato'] = $value['contato'];
+                    $passaArray[$cont]['usuario'] = $value['usuario'];
 //                    $passaArray[$cont]['user'] = $value['user'];
                     $passaArray[$cont]['contEdit'] = $empresas->countEdit($id)['c'];
 

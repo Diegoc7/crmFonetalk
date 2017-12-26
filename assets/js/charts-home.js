@@ -81,6 +81,29 @@ $(document).ready(function () {
                     pointHitRadius: 10,
                     data: [20, 7, 35, 17, 26, 8, 18, 10, 14, 46, 30, 30],
                     spanGaps: false
+                },
+                {
+                    label: "Abertos",
+                    fill: true,
+                    lineTension: 0,
+                    backgroundColor: "transparent",
+                    borderColor: "#85b4f2",
+                    pointHoverBackgroundColor: "#008ccc",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    borderWidth: 1,
+                    pointBorderColor: "#008ccc",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBorderColor: "#fff",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: [2, 74, 32, 10, 10, 2, 3, 55, 12, 5, 8, 30],
+                    spanGaps: false
                 }
             ]
         }

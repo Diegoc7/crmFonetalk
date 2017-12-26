@@ -167,7 +167,9 @@ class Contatos extends model {
             $enderecoEdit = addslashes($enderecoEdit);
             $observacaoEdit = addslashes($observacaoEdit);
             $id_user_edit = addslashes($id_user_edit);
-            $sql = "UPDATE contatos SET nome = '$nomeEdit', id_empresa = '$empresaEdit', cargo = '$cargoEdit', tipo_tel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipo_tel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipo_tel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', origem = '$origemEdit', cpf = '$cpfEdit', data_nascimento = '$dataEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit'   WHERE id = '$id_user_edit'";
+            $sql = "UPDATE contatos SET nome = '$nomeEdit', id_empresa = '$empresaEdit', cargo = '$cargoEdit', tipo_tel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipo_tel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipo_tel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', origem = '$origemEdit', cpf = '$cpfEdit', data_nascimento = '$dataEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit'   WHERE id = '$id_contato'";
+            shell_exec("echo '" . $id_user_edit . " << SQL id " . "' >> /var/log/log_developer/adm.log");
+            shell_exec("echo '" . $sql . " << SQL Editando Contato " . "' >> /var/log/log_developer/adm.log");
             $sql = $this->db->prepare($sql);
             $sql->execute();
 

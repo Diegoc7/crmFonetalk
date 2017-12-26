@@ -1,8 +1,6 @@
-<?php
-session_start();
-?>
+
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -30,6 +28,8 @@ session_start();
         <link rel="stylesheet" href="<?php echo BASE_URL ?>assets/vendor/font-awesome/css/font-awesome.min.css">
 
 
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.css' rel='stylesheet' />
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.print.css' rel='stylesheet' media='print' />
         <!-- Google fonts - Poppins -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,700">
         <!-- theme stylesheet-->
@@ -69,33 +69,16 @@ session_start();
                                 <!-- Search-->
                                 <li class="nav-item d-flex align-items-center"><a id="search" href="#"><i class="icon-search"></i></a></li>
                                 <!-- Notifications-->
-                                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red">12</span></a>
-                                    <ul aria-labelledby="notifications" class="dropdown-menu">
-                                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                                                <div class="notification">
-                                                    <div class="notification-content"><i class="fa fa-envelope bg-green"></i>Você tem 6 novas mensagens </div>
-                                                    <div class="notification-time"><small>4 minutos atrás</small></div>
-                                                </div></a></li>
-                                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                                                <div class="notification">
-                                                    <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>Você tem 2 seguidores</div>
-                                                    <div class="notification-time"><small>4 minutos atrás</small></div>
-                                                </div></a></li>
-                                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                                                <div class="notification">
-                                                    <div class="notification-content"><i class="fa fa-upload bg-orange"></i>Servidor Reinciado</div>
-                                                    <div class="notification-time"><small>4 minutos atrás</small></div>
-                                                </div></a></li>
-                                        <li><a rel="nofollow" href="#" class="dropdown-item"> 
-                                                <div class="notification">
-                                                    <div class="notification-content"><i class="fa fa-twitter bg-blue"></i>Você tem 2 Seguidores</div>
-                                                    <div class="notification-time"><small>10 minutos atrás</small></div>
-                                                </div></a></li>
+                                <li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span id="numberNotificacao" class="badge bg-secondary">0</span></a>
+                                <!--<li class="nav-item dropdown"> <a id="notifications" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-bell-o"></i><span class="badge bg-red">0</span></a>-->
+                                    <ul id="notificacoes" aria-labelledby="notifications" class="dropdown-menu">
+                                        
                                         <li><a rel="nofollow" href="#" class="dropdown-item all-notifications text-center"> <strong>Ver todas notificações                                            </strong></a></li>
                                     </ul>
                                 </li>
                                 <!-- Messages                        -->
-                                <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange">10</span></a>
+                                <li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-secondary">0</span></a>
+                                <!--<li class="nav-item dropdown"> <a id="messages" rel="nofollow" data-target="#" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link"><i class="fa fa-envelope-o"></i><span class="badge bg-orange">0</span></a>-->
                                     <ul aria-labelledby="notifications" class="dropdown-menu">
                                         <li><a rel="nofollow" href="#" class="dropdown-item d-flex"> 
                                                 <div class="msg-profile"> <img src="" alt="..." class="img-fluid rounded-circle"></div>
@@ -148,12 +131,13 @@ session_start();
                         </li>-->
                         <li id="bar_contatos" > <a href="<?php echo BASE_URL ?>contatos"> <i class="icon-user"></i>Contatos </a></li>
                         <li id="bar_empresas"> <a href="<?php echo BASE_URL ?>empresas"> <i class="fa fa-building"></i>Empresas </a></li>
+                        <li id="bar_atividades"> <a href="<?php echo BASE_URL ?>atividades"> <i class="icon-form"></i>Atividades </a></li>
                         <li id="barRelatorio"> <a href="<?php echo BASE_URL ?>forms.html"> <i class="fa fa-file"></i>Relatório </a></li>
                         <!--<li> <a href="login.html"> <i class="icon-interface-windows"></i>Login Page</a></li>-->
                     </ul><span class="heading">Extras</span>
                     <ul class="list-unstyled">
                       <!--<li> <a href="#"> <i class="icon-flask"></i>Demo </a></li>-->
-                        <li id="barAgenda"> <a href="<?php echo BASE_URL ?>#"> <i class="fa fa-calendar-o"></i>Agenda </a></li>
+                        <li id="bar_agenda"> <a href="<?php echo BASE_URL ?>agenda"> <i class="fa fa-calendar-o"></i>Agenda </a></li>
                         <li id="barMensagens"> <a href="<?php echo BASE_URL ?>#"> <i class="icon-mail"></i>Mensagens </a></li>
                         <li id="bar_usuarios"> <a href="<?php echo BASE_URL ?>usuarios"> <i class="fa fa-address-card-o"></i>Usuários </a></li>
                     </ul>
@@ -185,7 +169,6 @@ session_start();
                 </div>
             </div>
         </div>
-
         <div class="modal fade" id="modalCarregar" tabindex="-1" role="dialog" aria-labelledby="example" aria-hidden="true" data-backdrop="static" style="display: none;">
             <div class="modal-dialog" >
                 <div class="modal-content">
@@ -234,6 +217,22 @@ session_start();
                 </div>
             </div>
         </div>
+        <div class="modal fade" id="modalAgenda" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header" >
+                        <h4 class="modal-title"  id="tituloModalAlerta">Aviso!</h4>
+                    </div>
+                    <div  class="modal-body">
+                        <strong id="escreveAlertaModal">O Evento: Enviar E-mail ocorre Agora!!</strong>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Fechar</button>
+                            <!--<button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <!-- Javascript files-->
         <!--<script src="assets/js/jquery.min.js"></script>-->
         <script src="<?php echo BASE_URL ?>assets/vendor/jquery/jquery.js"></script>
@@ -251,9 +250,12 @@ session_start();
         <script src="<?php echo BASE_URL ?>assets/vendor/jquery-validation/jquery.validate.min.js"></script>
         <script src="<?php echo BASE_URL ?>assets/vendor/bootstrap/js/jquery.mask.min.js"></script>
         <script src="http://plentz.github.io/jquery-maskmoney/javascripts/jquery.maskMoney.min.js"></script>
+        <script src="<?php echo BASE_URL ?>assets/js/moment.min.js" charset="UTF-8"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.7.0/fullcalendar.min.js" charset="UTF-8"></script>
+       <script src="<?php echo BASE_URL ?>assets/js/pt-br.js" charset="UTF-8"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-        <script src="<?php echo BASE_URL ?>assets/js/charts-home.js"></script>
+        <!--<script src="assets/js/charts-home.js"></script>-->
         <script src="<?php echo BASE_URL ?>assets/js/front.js"></script>
-        <script src="<?php echo BASE_URL ?>assets/js/scripts/template.js"></script>
+        <script src="<?php echo BASE_URL ?>assets/js/scripts/template.js" charset="UTF-8"></script>
     </body>
 </html>

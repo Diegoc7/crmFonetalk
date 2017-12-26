@@ -15,6 +15,7 @@ class negociosController extends controller {
 
     //put your code here
     public function index() {
+        $this->validaSessao();
         $dados = array();
         $this->loadTemplate('negocios', $dados);
     }

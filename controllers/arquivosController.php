@@ -16,7 +16,7 @@ class arquivosController extends controller{
     public function anexar(){
 //        var_dump($_FILES);
 //        var_dump($_POST);
-        if(isset($_FILES) && $_POST['id'] > 0 && isset($_POST['id'])){
+        if(isset($_FILES) && isset($_POST['id']) && !empty($_FILES)){
             extract($_POST);
             $extensao = $this->validaExtensao($_FILES['arquivo']['name']);
             if($_FILES['arquivo']['size'] <= 4000000 && $extensao){
@@ -26,14 +26,16 @@ class arquivosController extends controller{
                 if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $caminho)) {
                     $arquivos = new Arquivos();
                     $retorno = $arquivos->insereArquivoBD($_FILES['arquivo']['name'], $id, $caminho, $tipo);
-                    echo json_encode($retorno);
+                    echo json_encode('ok');
                 }else{
-                     echo json_encode('erro-move');
+                     echo json_encode(3);
                 }
                 
             } else {
-                echo json_encode('error-size-or-extension');
+                echo json_encode(2);
             }
+        } else {
+             echo json_encode(1);
         }
     }
     private function validaPasta($tipo, $id){
@@ -44,7 +46,7 @@ class arquivosController extends controller{
     
     private function validaExtensao($nome){
         $nome = strtolower($nome);
-        $extensoes = array('csv', 'txt', 'pdf', 'doc');
+        $extensoes = array('csv', 'txt', 'pdf', 'doc','zip', 'taz');
         $tmp = explode('.', $nome);
         $extensao = end($tmp);
         if (array_search($extensao, $extensoes) === false) {

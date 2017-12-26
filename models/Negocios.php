@@ -188,14 +188,81 @@ class Negocios extends model {
         $sql = "SELECT negocios.*, empresas.nome AS empresa, contatos.nome AS contato, usuario.nome AS usuario FROM negocios LEFT JOIN empresas ON negocios.id_empresa = empresas.id LEFT JOIN contatos ON negocios.id_contato = contatos.id LEFT JOIN usuario ON negocios.id_user = usuario.id WHERE negocios.id = '$id'";
         $sql = $this->db->prepare($sql);
         $sql->execute();
-        return $sql->fetchAll();
+        $array = $sql->fetchAll();
+//        var_dump($array);
+        return $this->arrumaNegocioUnico($array);
+//        return $sql->fetchAll();
+    }
+    
+     private function arrumaNegocioUnico($array = '') {
+        if (!empty($array)) {
+            $cont = 0;
+            $passaArray = '';
+            foreach ($array as $value) {
+                $passaArray[$cont]['id'] = $value['id'];
+                $passaArray[$cont]['nome'] = $value['nome'];
+                $passaArray[$cont]['fase'] = $value['fase'];
+                $data = $value['data'];
+                $passaArray[$cont]['data'] = date('d/m/Y h:i:s', strtotime($data));
+                $previsao = $value['previsao'];
+                $passaArray[$cont]['previsao'] = date('d/m/Y', strtotime($previsao));
+                $passaArray[$cont]['valor'] = $value['valor'];
+                $passaArray[$cont]['status'] = $value['status'];
+                $passaArray[$cont]['id_contato'] = $value['id_contato'];
+                $passaArray[$cont]['id_empresa'] = $value['id_empresa'];
+                $passaArray[$cont]['id_user'] = $value['id_user'];
+                $passaArray[$cont]['empresa'] = $value['empresa'];
+                $passaArray[$cont]['contato'] = $value['contato'];
+                $passaArray[$cont]['usuario'] = $value['usuario'];
+                $cont = $cont + 1;
+            }
+            if (!empty($passaArray) && isset($passaArray)) {
+                return $passaArray;
+            } else {
+                return FALSE;
+            }
+        }
     }
 
     public function buscaNegociosUnicoHistorico($id) {
         $sql = "SELECT historico_negocios.*, empresas.nome AS empresa, contatos.nome AS contato, usuario.nome AS usuario FROM historico_negocios LEFT JOIN empresas ON historico_negocios.id_empresa = empresas.id LEFT JOIN contatos ON historico_negocios.id_contato = contatos.id LEFT JOIN usuario ON historico_negocios.id_user = usuario.id WHERE historico_negocios.id_negocios = '$id' ORDER BY data DESC";
         $sql = $this->db->prepare($sql);
         $sql->execute();
-        return $sql->fetchAll();
+        $array = $sql->fetchAll();
+        return $this->arrumaNegocioHistoricoUnico($array);
+//        return $sql->fetchAll();
+    }
+    
+     private function arrumaNegocioHistoricoUnico($array = '') {
+        if (!empty($array)) {
+            $cont = 0;
+            $passaArray = '';
+            foreach ($array as $value) {
+                $passaArray[$cont]['id'] = $value['id'];
+                $passaArray[$cont]['nome'] = $value['nome'];
+                $passaArray[$cont]['id_negocios'] = $value['id_negocios'];
+                $passaArray[$cont]['fase'] = $value['fase'];
+                $passaArray[$cont]['situacao'] = $value['situacao'];
+                $data = $value['data'];
+                $passaArray[$cont]['data'] = date('d/m/Y h:i:s', strtotime($data));
+                $previsao = $value['previsao'];
+                $passaArray[$cont]['previsao'] = date('d/m/Y', strtotime($previsao));
+                $passaArray[$cont]['valor'] = $value['valor'];
+                $passaArray[$cont]['status'] = $value['status'];
+                $passaArray[$cont]['id_contato'] = $value['id_contato'];
+                $passaArray[$cont]['id_empresa'] = $value['id_empresa'];
+                $passaArray[$cont]['id_user'] = $value['id_user'];
+                $passaArray[$cont]['empresa'] = $value['empresa'];
+                $passaArray[$cont]['contato'] = $value['contato'];
+                $passaArray[$cont]['usuario'] = $value['usuario'];
+                $cont = $cont + 1;
+            }
+            if (!empty($passaArray) && isset($passaArray)) {
+                return $passaArray;
+            } else {
+                return FALSE;
+            }
+        }
     }
 
     public function editaNegocio($array) {
@@ -222,6 +289,7 @@ class Negocios extends model {
                 'id_user' => $id_user_edit
             );
             $this->insertHistorico($editArray, 'edit', $id_negocio);
+            $dataPrevisaoEdit = $this->formataHoraParaBanco($dataPrevisaoEdit);
             $data = date('Y/m/d H:i:s');
 //            print_r($retorno);
             $sql = "UPDATE negocios SET data = '$data', nome = '$nomeEdit', fase = '$faseEdit', valor = '$valorEdit', previsao = '$dataPrevisaoEdit', status = '$statusEdit', id_contato = '$contatoEdit', id_empresa = '$empresaEdit' WHERE id = '$id_negocio'";

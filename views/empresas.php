@@ -140,7 +140,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-4 offset-sm-0 ">
                                     <input type="hidden" name="id_user" value="<?php echo $_SESSION['ID']; ?>" />
-                                    <button type="submit" class="btn btn-secondary">Cancelar</button>
+                                    <a href="#" onclick="fechaForm();" class="btn btn-secondary">Cancelar</a>
                                     <button type="submit" class="btn btn-primary">Inserir</button>
                                 </div>
                             </div>
@@ -286,8 +286,8 @@
                                 <div class="col-sm-4 offset-sm-0 ">
                                     <input type="hidden" name="id_user_edit" value="<?php echo $_SESSION['ID']; ?>" />
                                     <input type="hidden" id="id_empresa" name="id_empresa" value="" />
-                                    <button type="submit" class="btn btn-secondary">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Inserir</button>
+                                    <a href="#" onclick="fechaFormEdit();" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Editar</button>
                                 </div>
                             </div>
                         </form>
@@ -383,7 +383,7 @@
                                             <strong>Endereço :</strong><span id="mostraEndereco"></span><br/>
                                             <!--<strong>Origem :</strong><span id="mostraOrigem"></span><br/>-->
                                             <!--<strong>Nascimento:</strong> <span id="mostraDataNascimento"></span><br/>-->
-                                            <strong>Contato:</strong> <span id="mostraContato"></span><br/>
+                                            <strong>Contato:</strong> <span id="mostraContatoEmpresa"></span><br/>
                                         </div>
                                     </div>
                                 </div>
@@ -473,9 +473,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-sm-12">
-                                            
+
                                             <div class="form-group-material">
                                                 <!--<label for="assunto">Assunto</label>-->
                                                 <input id="assunto" placeholder="Assunto (obrigatório)" type="text" name="assunto" required="required" class="" maxlength="100"  >
@@ -521,8 +521,12 @@
                                     </form>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="references">
-                                     <form class="form-insert-file-company" method="POST" action="arquivos/anexar" enctype="multipart/form-data">
-                                         <label class="label label-default label-material"><strong>Insira um arquivo de até 4 MB </strong></label>
+                                    <br/>
+                                    <div class="alert-file alert ">
+<!--                                        <strong>Success!</strong> Indicates a successful or positive action.-->
+                                    </div> 
+                                    <form class="form-insert-file-company" method="POST" action="arquivos/anexar" enctype="multipart/form-data">
+                                        <label class="label label-default label-material"><strong>Insira um arquivo de até 4 MB </strong></label>
                                         <input type="file" name="arquivo" class="form-control btn btn-primary" /><br/><br/>
                                         <input type="hidden" name="tipo" value="empresas" />
                                         <input type="hidden" name="id" id="id_empresa_arquivo" />
@@ -547,7 +551,7 @@
                                     por: <span id="userCreate"></span>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <!--<div class="container-fluid">-->
                         <div class="col-lg-12">

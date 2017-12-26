@@ -160,7 +160,7 @@
                             <div class="form-group row">
                                 <div class="col-sm-4 offset-sm-0 ">
                                     <input type="hidden" name="id_user" value="<?php echo $_SESSION['ID']; ?>" />
-                                    <button type="submit" class="btn btn-secondary">Cancelar</button>
+                                    <a href="#" onclick="fechaForm();" class="btn btn-secondary">Cancelar</a>
                                     <button type="submit" class="btn btn-primary">Inserir</button>
                                 </div>
                             </div>
@@ -318,8 +318,8 @@
                                 <div class="col-sm-4 offset-sm-0 ">
                                     <input type="hidden" name="id_user_edit" value="<?php echo $_SESSION['ID']; ?>" />
                                     <input type="hidden" id="id_contato" name="id_contato" value="" />
-                                    <button type="submit" class="btn btn-secondary">Cancelar</button>
-                                    <button type="submit" class="btn btn-primary">Inserir</button>
+                                    <a href="#" onclick="fechaFormEdit();" class="btn btn-secondary">Cancelar</a>
+                                    <button type="submit" class="btn btn-primary">Editar</button>
                                 </div>
                             </div>
                         </form>
@@ -385,10 +385,10 @@
                                 <div class="card-body text-center">
                                     <div class="client-avatar"><i class="fa fa-user-circle-o fa-5x" aria-hidden="true"></i>
                                     <!--<div class="client-avatar"><img src="assets/images/fonetalk_logo.png" alt="..." class="img-fluid rounded-circle">-->
-                                        <div class="status bg-green"></div>
+                                        <!--<div class="status bg-green"></div>-->
                                     </div>
                                     <div class="client-title">
-                                        <h3 id="nome_cliente">No Name</h3><span id="cargo_cliente">Sem Cargo</span><button class="btn btn-outline-danger  btn-sm" id="desativaCliente">Desativar</button>
+                                        <h3 id="nome_cliente">No Name</h3><span id="cargo_cliente">Sem Cargo</span><button disabled class="btn btn-outline-danger  btn-sm" id="desativaCliente">Desativar</button>
                                     </div>
                                     <div class="client-info">
                                         <div class="row">
@@ -469,9 +469,9 @@
                                 <li class="nav-item">
                                     <a class="nav-link " href="#profile" role="tab" data-toggle="tab">Notas</a>
                                 </li>
-                                <li class="nav-item">
+<!--                                <li class="nav-item">
                                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
-                                </li>
+                                </li>-->
                                 <li class="nav-item">
                                     <a class="nav-link" href="#references" role="tab" data-toggle="tab">Anexar Arquivos</a>
                                 </li>
@@ -553,6 +553,10 @@
                                     </form>
                                 </div>
                                 <div role="tabpanel" class="tab-pane fade" id="references">
+                                    <br/>
+                                    <div class="alert-file alert ">
+<!--                                        <strong>Success!</strong> Indicates a successful or positive action.-->
+                                    </div> 
                                     <form class="form-insert-file-contact" method="POST" action="arquivos/anexar" enctype="multipart/form-data">
                                         <label class="label label-default label-material">Insira um arquivo de até 4 MB </label>
                                         <input type="file" name="arquivo" class="form-control btn btn-primary" /><br/><br/>

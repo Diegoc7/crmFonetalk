@@ -48,13 +48,13 @@
                                 </div>
                                 <div class="col-sm-4">
                                      <div class="form-group-material">
-                                        <input id="valor" type="text" name="valor"  class="input-material" data-thousands="." data-decimal="," data-prefix="R$ " value="R$ 0,00"  >
+                                        <input id="valor" type="text" required name="valor"  class="input-material" data-thousands="." data-decimal="," data-prefix="R$ " value="R$ 0,00"  >
                                         <label for="valor" class="label-material">Valor </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                    <div class="form-group-material">
-                                        <input id="dataPrevisao" type="text" name="dataPrevisao"  class="input-material dataFormato" maxlength="100"  >
+                                        <input id="dataPrevisao" required type="text" name="dataPrevisao"  class="input-material dataFormato" maxlength="100"  >
                                         <label for="dataPrevisao" class="label-material">Data Prevista </label>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="status" name="status"   class="selectpicker form-control  show-tick" data-live-search="true" title="Status" >
+                                        <select id="status" name="status" required  class="selectpicker form-control  show-tick" data-live-search="true" title="Status" >
                                             <option id="Aberto">Aberto</option>
                                             <option id="Ganhou">Ganhou</option>
                                             <option id="Perdido">Perdido</option>
@@ -135,13 +135,13 @@
                                 </div>
                                 <div class="col-sm-4">
                                      <div class="form-group-material">
-                                        <input id="valorEdit" type="text" name="valorEdit"  class="input-material" data-thousands="." data-decimal="," data-prefix="R$ " value="R$ 0,00"  >
+                                        <input id="valorEdit" type="text" name="valorEdit" required  class="input-material" data-thousands="." data-decimal="," data-prefix="R$ " value="R$ 0,00"  >
                                         <label for="valorEdit" class="label-material">Valor </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                    <div class="form-group-material">
-                                        <input id="dataPrevisaoEdit" type="text" name="dataPrevisaoEdit"  class="input-material dataFormato" maxlength="100"  >
+                                        <input id="dataPrevisaoEdit" required type="text" name="dataPrevisaoEdit"  class="input-material dataFormato" maxlength="100"  >
                                         <label for="dataPrevisaoEdit" class="label-material">Data Prevista </label>
                                     </div>
                                 </div>
@@ -157,7 +157,7 @@
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="statusEdit" name="statusEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Status" >
+                                        <select id="statusEdit" name="statusEdit" required  class="selectpicker form-control  show-tick" data-live-search="true" title="Status" >
                                             <option id="Aberto">Aberto</option>
                                             <option id="Ganhou">Ganhou</option>
                                             <option id="Perdido">Perdido</option>
@@ -245,10 +245,10 @@
                                 <div class="card-body text-center">
                                     <div class="client-avatar"><i class="fa fa-money fa-5x" aria-hidden="true"></i>
                                     <!--<div class="client-avatar"><img src="assets/images/fonetalk_logo.png" alt="..." class="img-fluid rounded-circle">-->
-                                        <div class="status bg-green"></div>
+                                        <!--<div class="status bg-green"></div>-->
                                     </div>
                                     <div class="client-title">
-                                        <h3 id="nome_negocio">No Name</h3><span id="mostraStatus">Sem Cargo</span><button class="btn btn-outline-danger  btn-sm" id="desativaCliente">Desativar</button>
+                                        <h3 id="nome_negocio">No Name</h3><span id="mostraStatus">Sem Cargo</span><button disabled class="btn btn-outline-danger  btn-sm" id="desativaCliente">Desativar</button>
                                     </div>
 <!--                                    <div class="client-info">
                                         <div class="row">
@@ -286,7 +286,7 @@
                                         </a>
                                     </div>
                                     <div id="collapseThree" class="collapse">
-                                        <div class="card-body">
+                                        <div  id="mostraArquivos" class="card-body">
                                             Sem Arquivos
                                         </div>
                                     </div>
@@ -296,14 +296,14 @@
                         </div>
                         <div class="col-md-7 col-md-offset-5">
                             <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
+<!--                                <li class="nav-item">
                                     <a class="nav-link active" href="#profile" role="tab" data-toggle="tab">Notas</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
-                                </li>
+                                </li>-->
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Editar</a>
+                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Arquivos</a>
                                 </li>
                             </ul>
 
@@ -382,7 +382,20 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div role="tabpanel" class="tab-pane fade" id="references">ccc</div>
+                                <div role="tabpanel" class="tab-pane fade" id="references">
+                                    <br/>
+                                    <div class="alert-file alert ">
+<!--                                        <strong>Success!</strong> Indicates a successful or positive action.-->
+                                    </div> 
+                                    <form class="form-insert-file-business" method="POST" action="arquivos/anexar" enctype="multipart/form-data">
+                                        <label class="label label-default label-material"><strong>Insira um arquivo de até 4 MB </strong></label>
+                                        <input type="file" name="arquivo" class="form-control btn btn-primary" /><br/><br/>
+                                        <input type="hidden" name="tipo" value="negocios" />
+                                        <input type="hidden" name="id" id="id_negocio_arquivo" />
+                                        <button type="submit" id="btn_send_form" class="btn btn-primary"> Enviar</button>
+                                    </form>
+                                    <hr/>
+                                </div>
                             </div>
                             <div id="writeNotes">
 

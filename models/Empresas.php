@@ -91,7 +91,7 @@ class Empresas extends model {
     }
 
     public function buscaEmpresaEspecifica($id) {
-        $sql = "SELECT empresas.*, contatos.nome AS contato FROM empresas LEFT JOIN contatos ON empresas.id_contato = contatos.id JOIN usuario WHERE empresas.id = '$id' AND usuario.id = empresas.id_user";
+        $sql = "SELECT empresas.*, contatos.nome AS contato, usuario.nome AS usuario FROM empresas LEFT JOIN contatos ON empresas.id_contato = contatos.id JOIN usuario WHERE empresas.id = '$id' AND usuario.id = empresas.id_user";
         $sql = $this->db->prepare($sql);
         $sql->execute();
         return $sql->fetchAll();
@@ -160,7 +160,7 @@ class Empresas extends model {
             $enderecoEdit = addslashes($enderecoEdit);
             $observacaoEdit = addslashes($observacaoEdit);
             $id_user_edit = addslashes($id_user_edit);
-            $sql = "UPDATE empresas SET nome = '$nomeEdit', id_contato = '$contatoEdit', cargo = '$cargoEdit', tipotel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipotel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipotel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', site = '$siteEdit', cnpj = '$cnpjEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit' WHERE id = '$id_user_edit'";
+            $sql = "UPDATE empresas SET nome = '$nomeEdit', id_contato = '$contatoEdit', cargo = '$cargoEdit', tipotel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipotel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipotel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', site = '$siteEdit', cnpj = '$cnpjEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit' WHERE id = '$id_empresa'";
             $sql = $this->db->prepare($sql);
             $sql->execute();
             

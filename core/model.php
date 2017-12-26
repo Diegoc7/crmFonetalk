@@ -20,7 +20,7 @@ class model {
         $this->db = $db;
     }
 
-    protected function formataHoraParaBanco($data) {
+    public function formataHoraParaBanco($data) {
 //    $data = '21/01/2017';
         if (strstr($data, '/')) {
             $aux = explode('/', $data);

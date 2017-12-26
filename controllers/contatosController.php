@@ -3,6 +3,7 @@
 class contatosController extends controller {
 
     public function index() {
+        $this->validaSessao();
         $dados = array();
         $this->loadTemplate('contatos', $dados);
     }
@@ -27,6 +28,7 @@ class contatosController extends controller {
     public function contato($id) {
 //        echo "OK$id";
 //        echo realpath;
+        $this->validaSessao();
         if (isset($id) && !empty($id) && $id > 0 && is_numeric($id)) {
             $dados = array(
                 'id_contato' => $id
@@ -88,6 +90,7 @@ class contatosController extends controller {
 
     public function edita() {
 //        var_dump($_POST);
+        shell_exec("echo '" . $_POST['id_contato'] . " << Chegou " . "' >> /var/log/log_developer/adm.log");
         $contatos = new Contatos();
         $retorno = $contatos->editaContato($_POST);
         if ($retorno) {

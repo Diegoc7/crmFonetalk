@@ -14,6 +14,7 @@
 class usuariosController extends controller{
     //put your code here
     public function index(){
+        $this->validaSessao();
         $dados = array();
         $this->loadTemplate('usuarios',$dados);
     }
