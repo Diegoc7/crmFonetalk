@@ -469,9 +469,9 @@ function montaTabela(value, index, ar) {
     var tipo = '';
     if (value.tipo == '1') {
         tipo = 'Administração';
-    } else if (value.status == '2') {
+    } else if (value.tipo == '2') {
         tipo = 'Vendedor';
-    } else if (value.status == '3') {
+    } else if (value.tipo == '3') {
         tipo = 'Operador';
     } else if (value.status == 'Andamento') {
         tipo = ' ';
