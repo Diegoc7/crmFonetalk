@@ -12,7 +12,7 @@
                             <div role="progressbar" style="width: 100%; height: 4px;" aria-valuenow="{#val.value}" aria-valuemin="0" aria-valuemax="100" class="progress-bar bg-warning"></div>
                         </div>
                     </div>
-                    <div class="number" ><strong id="numeroCliente">25</strong></div>
+                    <div class="number" ><strong id="numeroCliente">0</strong></div>
                 </div>
             </div>
             <!-- Item -->
@@ -62,15 +62,15 @@
             <div class="statistics col-lg-3 col-12">
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-red"><i class="fa fa-phone"></i></div>
-                    <div class="text"><strong>34</strong><br><small>Ligar</small></div>
+                    <div class="text"><strong>0</strong><br><small>Ligar</small></div>
                 </div>
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-green"><i class="fa fa-calendar-o"></i></div>
-                    <div class="text"><strong>15</strong><br><small>Agendamentos</small></div>
+                    <div class="text"><strong>0</strong><br><small>Agendamentos</small></div>
                 </div>
                 <div class="statistic d-flex align-items-center bg-white has-shadow">
                     <div class="icon bg-orange"><i class="fa fa-paper-plane-o"></i></div>
-                    <div class="text"><strong>2</strong><br><small>Visitas</small></div>
+                    <div class="text"><strong>0</strong><br><small>Visitas</small></div>
                 </div>
             </div>
             <!-- Line Chart            -->
@@ -106,7 +106,7 @@
 <section class="projects no-padding-top">
     <div class="container-fluid">
         <!-- Project-->
-        <div class="project">
+<!--        <div class="project">
             <div class="row bg-white has-shadow">
                 <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                     <div class="project-title d-flex align-items-center">
@@ -127,9 +127,9 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- Project-->
-        <div class="project">
+<!--        <div class="project">
             <div class="row bg-white has-shadow">
                 <div class="left-col col-lg-6 d-flex align-items-center justify-content-between">
                     <div class="project-title d-flex align-items-center">
@@ -150,7 +150,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
         <!-- Project-->
 
         <!-- Project-->
@@ -158,15 +158,15 @@
     </div>
 </section>
 <!-- Client Section-->
-<section class="client no-padding-top">
+<!--<section class="client no-padding-top">
     <div class="container-fluid">
         <div class="row">
             <div class="col-lg-6">
                 <div class="work-amount card">
                     
                     <div class="card-body">
-                        <h3>Distribuição</h3><small>Lorem ipsum dolor sit amet.</small>
-                        <!--<div class=" text-center" >-->
+                        <h3>Distribuição</h3>
+                        <div class=" text-center" >
                         <div class="chart text-center">
                             <div class="text"><strong>90</strong><br><span>Total</span></div>
                             <canvas id="pizza"></canvas>
@@ -174,15 +174,15 @@
                     </div>
                 </div>
             </div>
-<!--            <div class="chart col-lg-6 col-12">
+            <div class="chart col-lg-6 col-12">
                 <div class="line-chart bg-white d-flex align-items-center justify-content-center has-shadow">
                     <canvas id="pizza"></canvas>
                 </div>
-            </div>-->
+            </div>
         </div>
 
     </div>
-</section>
+</section>-->
 <!-- Feeds Section-->
 <!-- Updates Section                                                -->
 

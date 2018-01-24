@@ -29,7 +29,7 @@
                                 <!--<label class="col-sm-6 form-control-label text-bold">Dados Obrigatórios </label>-->
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
-                                        
+
                                         <select id="tipo" name="tipo"   class="selectpicker form-control  show-tick" data-live-search="true" title="tipo de atividade" required="required" >
                                             <option id="E-mail">E-mail</option>
                                             <option id="Feedback">Feedback</option>
@@ -37,7 +37,7 @@
                                             <option id="Reunião">Reunião</option>
                                             <option id="Visita">Visita</option>
                                         </select>
-                                        
+
                                     </div>
 
                                 </div>
@@ -51,37 +51,56 @@
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="negocio" name="negocio"  required  class="selectpicker form-control  show-tick" data-live-search="true" title="négocio" >
-                                           
-                                        </select>
+<!--                                        <select id="negocio" name="negocio"  required  class="selectpicker form-control  show-tick" data-live-search="true" title="négocio" >
+                                        </select>-->
+                                        <input id="negocio" type="text" name="negocio"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaNegocio" type="hidden" name="idBuscaNegocio"   >
+                                        <label for="idBuscaNegocio" class="label-material">Négocio </label>
+                                        <div id="respostaNegocio" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                   <div class="form-group-material">
+                                    <div class="form-group-material">
                                         <input id="dataAgendamento" type="text" required name="dataAgendamento"  class="input-material dataFormato" maxlength="100"  >
                                         <label for="dataAgendamento" class="label-material">Data Agendamento </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                     <div class="form-group-material">
-                                         <input id="hora" type="time" name="hora" required  class="input-material"   >
+                                    <div class="form-group-material">
+                                        <input id="hora" type="time" name="hora" required  class="input-material"   >
                                         <label for="hora" class="label-material">Hora </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="contato" name="contato"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
-
-                                        </select>
+<!--                                        <select id="contato" name="contato"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
+                                        </select>-->
+                                        <input id="empresa" type="text" name="empresa"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaEmpresa" type="hidden" name="idBuscaEmpresa"   >
+                                        <label for="contato" class="label-material">Empresa </label>
+                                        <div id="respostaEmpresa" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="empresa" name="empresa"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
-                                        </select>
+<!--                                        <select id="empresa" name="empresa"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
+                                        </select>-->
+                                        <input id="contato" type="text" name="contato"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaContato" type="hidden" name="idBuscaContato"   >
+                                        <label for="contato" class="label-material">Contato </label>
+                                        <div id="respostaContato" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -91,7 +110,7 @@
                                         <textarea id="observacao" name="observacao" class="form-control" maxlength="150" placeholder="Insira alguma observação" ></textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                             <div class="line"></div>
                             <div class="form-group row">
@@ -124,7 +143,7 @@
                                 <!--<label class="col-sm-6 form-control-label text-bold">Dados Obrigatórios </label>-->
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
-                                        
+
                                         <select id="tipoEdit" name="tipoEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="tipo de atividade" required="required" >
                                             <option id="E-mail">E-mail</option>
                                             <option id="Feedback">Feedback</option>
@@ -132,7 +151,7 @@
                                             <option id="Reunião">Reunião</option>
                                             <option id="Visita">Visita</option>
                                         </select>
-                                        
+
                                     </div>
 
                                 </div>
@@ -146,37 +165,56 @@
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="negocioEdit" name="negocioEdit"  required  class="selectpicker form-control  show-tick" data-live-search="true" title="négocio" >
-                                           
-                                        </select>
+<!--                                        <select id="negocioEdit" name="negocioEdit"  required  class="selectpicker form-control  show-tick" data-live-search="true" title="négocio" >
+                                        </select>-->
+                                        <input id="negocioEdit" type="text" name="negocioEdit"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaNegocioEdit" type="hidden" name="idBuscaNegocioEdit"   >
+                                        <label for="contato" class="label-material">Négocio </label>
+                                        <div id="respostaNegocioEdit" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                   <div class="form-group-material">
+                                    <div class="form-group-material">
                                         <input id="dataAgendamentoEdit" type="text" required name="dataAgendamentoEdit"  class="input-material dataFormato" maxlength="100"  >
                                         <label for="dataAgendamentoEdit" class="label-material">Data Agendamento </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                     <div class="form-group-material">
-                                         <input id="horaEdit" type="time" name="horaEdit" required  class="input-material"   >
+                                    <div class="form-group-material">
+                                        <input id="horaEdit" type="time" name="horaEdit" required  class="input-material"   >
                                         <label for="horaEdit" class="label-material">Hora </label>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="contatoEdit" name="contatoEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
-
-                                        </select>
+<!--                                        <select id="contatoEdit" name="contatoEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
+                                        </select>-->
+                                        <input id="contatoEdit" type="text" name="contatoEdit"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaContatoEdit" type="hidden" name="idBuscaContatoEdit"   >
+                                        <label for="idBuscaContatoEdit" class="label-material">Contato </label>
+                                        <div id="respostaContatoEdit" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="empresaEdit" name="empresaEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
-                                        </select>
+<!--                                        <select id="empresaEdit" name="empresaEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
+                                        </select>-->
+                                        <input id="empresaEdit" type="text" name="empresaEdit"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaEmpresaEdit" type="hidden" name="idBuscaEmpresaEdit"   >
+                                        <label for="respostaEmpresaEdit" class="label-material">Empresa </label>
+                                        <div id="respostaEmpresaEdit" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-12">
@@ -186,7 +224,7 @@
                                         <textarea id="observacaoEdit" name="observacaoEdit" class="form-control" maxlength="150" placeholder="Insira alguma observação" ></textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                             <div class="line"></div>
                             <div class="form-group row">
@@ -265,13 +303,13 @@
                                     <div class="client-title">
                                         <h3 id="mostraAssunto">No Name</h3><span id="mostraTipo">Sem Tipo</span><button id="btnDelAtividade"  class="btnDelAtividade btn btn-outline-danger  btn-sm" >Deletar</button>
                                     </div>
-<!--                                    <div class="client-info">
-                                        <div class="row">
-                                            <div class="col-4"><strong id="contNotas">0</strong><br><small>Notas</small></div>
-                                            <div class="col-4"><strong>0</strong><br><small>Ativida.</small></div>
-                                            <div class="col-4"><strong id="contEdit">0</strong><br><small>Edições</small></div>
-                                        </div>
-                                    </div>-->
+                                    <!--                                    <div class="client-info">
+                                                                            <div class="row">
+                                                                                <div class="col-4"><strong id="contNotas">0</strong><br><small>Notas</small></div>
+                                                                                <div class="col-4"><strong>0</strong><br><small>Ativida.</small></div>
+                                                                                <div class="col-4"><strong id="contEdit">0</strong><br><small>Edições</small></div>
+                                                                            </div>
+                                                                        </div>-->
                                     <div class="small">
                                         <i class="fa fa-money fa-1x" aria-hidden="true"></i> <span id="mostraNegocio"></span> 
                                     </div>
@@ -294,33 +332,33 @@
                                         </div>
                                     </div>
                                 </div>
-<!--                                <div class="card">
-                                    <div class="card-header">
-                                        <a class="collapsed card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                            Arquivos
-                                        </a>
-                                    </div>
-                                    <div id="collapseThree" class="collapse">
-                                        <div class="card-body">
-                                            Sem Arquivos
-                                        </div>
-                                    </div>
-                                </div>-->
+                                <!--                                <div class="card">
+                                                                    <div class="card-header">
+                                                                        <a class="collapsed card-link" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+                                                                            Arquivos
+                                                                        </a>
+                                                                    </div>
+                                                                    <div id="collapseThree" class="collapse">
+                                                                        <div class="card-body">
+                                                                            Sem Arquivos
+                                                                        </div>
+                                                                    </div>
+                                                                </div>-->
 
                             </div>
                         </div>
                         <div class="col-md-7 col-md-offset-5">
-<!--                            <ul class="nav nav-tabs" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link " href="#profile" role="tab" data-toggle="tab">Notas</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#references" role="tab" data-toggle="tab">Editar</a>
-                                </li>
-                            </ul>-->
+                            <!--                            <ul class="nav nav-tabs" role="tablist">
+                                                            <li class="nav-item">
+                                                                <a class="nav-link " href="#profile" role="tab" data-toggle="tab">Notas</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="#buzz" role="tab" data-toggle="tab">Atividade</a>
+                                                            </li>
+                                                            <li class="nav-item">
+                                                                <a class="nav-link" href="#references" role="tab" data-toggle="tab">Editar</a>
+                                                            </li>
+                                                        </ul>-->
 
                             <!-- Tab panes -->
                             <div class="tab-content">
@@ -350,9 +388,9 @@
                                                 </select>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="col-sm-12">
-                                            
+
                                             <div class="form-group-material">
                                                 <!--<label for="assunto">Assunto</label>-->
                                                 <input id="assunto" placeholder="Assunto (obrigatório)" type="text" name="assunto" required="required" class="" maxlength="100"  >
@@ -417,7 +455,7 @@
                                     por: <span id="userCreate"></span>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <!--<div class="container-fluid">-->
                         <div class="col-lg-12">

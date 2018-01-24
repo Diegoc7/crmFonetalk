@@ -61,9 +61,15 @@
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="contato" name="contato"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
-
-                                        </select>
+<!--                                        <select id="contato" name="contato"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
+                                        </select>-->
+                                        <input id="contato" type="text" name="contato"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaContato" type="hidden" name="idBuscaContato"   >
+                                        <label for="contato" class="label-material">Contato </label>
+                                        <div id="respostaContato" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -80,8 +86,15 @@
                                 <div class="col-sm-4">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="empresa" name="empresa"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
-                                        </select>
+<!--                                        <select id="empresa" name="empresa"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
+                                        </select>-->
+                                        <input id="empresa" type="text" name="empresa"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaEmpresa" type="hidden" name="idBuscaEmpresa"   >
+                                        <label for="contato" class="label-material">Empresa </label>
+                                        <div id="respostaEmpresa" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                                

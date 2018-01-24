@@ -25,10 +25,20 @@ class Atividades extends model {
             } else {
                 $negocio = addslashes($negocio);
             }
+            if (empty($idBuscaNegocio) || !isset($idBuscaNegocio)) {
+                $idBuscaNegocio = '';
+            } else {
+                $idBuscaNegocio = addslashes($idBuscaNegocio);
+            }
             if (empty($empresa) || !isset($empresa)) {
                 $empresa = '';
             } else {
                 $empresa = addslashes($empresa);
+            }
+            if (empty($idBuscaEmpresa) || !isset($idBuscaEmpresa)) {
+                $idBuscaEmpresa = '';
+            } else {
+                $idBuscaEmpresa = addslashes($idBuscaEmpresa);
             }
             if (empty($tipo) || !isset($tipo)) {
                 $tipo = '';
@@ -40,6 +50,11 @@ class Atividades extends model {
             } else {
                 $contato = addslashes($contato);
             }
+            if (empty($idBuscaContato) || !isset($idBuscaContato)) {
+                $idBuscaContato = '';
+            } else {
+                $idBuscaContato = addslashes($idBuscaContato);
+            }
             $dataAgendamento = addslashes($dataAgendamento);
             $dataAgendamento = $this->formataHoraParaBanco($dataAgendamento);
             $hora = addslashes($hora);
@@ -48,7 +63,7 @@ class Atividades extends model {
             $observacao = addslashes($observacao);
             $id_user = addslashes($id_user);
             $dataInsercao = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO atividades VALUES('','$dataInsercao','$assunto','$dataAgendamento','$hora','$tipo','$observacao', '$id_user','$contato','$empresa','$negocio','1')";
+            $sql = "INSERT INTO atividades VALUES('','$dataInsercao','$assunto','$dataAgendamento','$hora','$tipo','$observacao', '$id_user','$idBuscaContato','$idBuscaEmpresa','$idBuscaNegocio','1')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
             $lastInsertID = $this->db->lastInsertId();
@@ -180,7 +195,7 @@ class Atividades extends model {
 
             $data = date('Y/m/d H:i:s');
 //            print_r($retorno);
-            $sql = "UPDATE atividades SET data = '$data', assunto = '$assuntoEdit', data_agendamento = '$dataAgendamentoEdit', hora = '$horaEdit', tipo = '$tipoEdit', observacao = '$observacaoEdit', id_user = '$id_user_edit', id_contato = '$contatoEdit', id_empresa = '$empresaEdit', id_negocio = '$negocioEdit' WHERE id = '$id_atividade'";
+            $sql = "UPDATE atividades SET data = '$data', assunto = '$assuntoEdit', data_agendamento = '$dataAgendamentoEdit', hora = '$horaEdit', tipo = '$tipoEdit', observacao = '$observacaoEdit', id_user = '$id_user_edit', id_contato = '$idBuscaContatoEdit', id_empresa = '$idBuscaEmpresaEdit', id_negocio = '$idBuscaNegocioEdit' WHERE id = '$id_atividade'";
             $sql = $this->db->prepare($sql);
             $sql->execute();
             $this->alteraAgenda($dataAgendamentoEdit, $horaEdit, $assuntoEdit, $tipoEdit, $id_user_edit, $id_atividade);

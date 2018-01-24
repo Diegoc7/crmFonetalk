@@ -25,6 +25,11 @@ class Empresas extends model {
             } else {
                 $contato = addslashes($contato);
             }
+            if (empty($idBuscaContato) || !isset($idBuscaContato)) {
+                $idBuscaContato = '';
+            } else {
+                $idBuscaContato = addslashes($idBuscaContato);
+            }
             $cargo = addslashes($cargo);
 //            $tipoCell = addslashes($tipoCell);
             if (empty($tipoCell) || !isset($tipoCell)) {
@@ -73,7 +78,8 @@ class Empresas extends model {
             $observacao = addslashes($observacao);
             $id_user = addslashes($id_user);
             $dataInsercao = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO empresas VALUES('','$dataInsercao','$nome','$contato','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$site','$observacao','$cnpj','$endereco','$id_user')";
+            $sql = "INSERT INTO empresas VALUES('','$dataInsercao','$nome','$idBuscaContato','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$site','$observacao','$cnpj','$endereco','$id_user')";
+//            $sql = "INSERT INTO empresas VALUES('','$dataInsercao','$nome','$contato','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$site','$observacao','$cnpj','$endereco','$id_user')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
             return $this->db->lastInsertId();
@@ -96,13 +102,14 @@ class Empresas extends model {
         $sql->execute();
         return $sql->fetchAll();
     }
-    public function countEdit($id){
+
+    public function countEdit($id) {
         $sql = "SELECT COUNT(*) as c FROM  historico_empresas WHERE id_empresa = '$id'";
         $sql = $this->db->prepare($sql);
         $sql->execute();
         return $sql->fetch();
     }
-    
+
     public function editaEmpresa($array) {
         if (is_array($array) && $array['id_empresa'] > 0 && !empty($array['id_empresa'])) {
             extract($array);
@@ -112,6 +119,11 @@ class Empresas extends model {
                 $contatoEdit = '';
             } else {
                 $contatoEdit = addslashes($contatoEdit);
+            }
+            if (empty($idBuscaContatoEdit) || !isset($idBuscaContatoEdit)) {
+                $idBuscaContatoEdit = '';
+            } else {
+                $idBuscaContatoEdit = addslashes($idBuscaContatoEdit);
             }
             $cargoEdit = addslashes($cargoEdit);
 //            $tipoCell = addslashes($tipoCell);
@@ -156,23 +168,56 @@ class Empresas extends model {
 //            }
             $cnpjEdit = addslashes($cnpjEdit);
             $siteEdit = addslashes($siteEdit);
-            
+
             $enderecoEdit = addslashes($enderecoEdit);
             $observacaoEdit = addslashes($observacaoEdit);
             $id_user_edit = addslashes($id_user_edit);
-            $sql = "UPDATE empresas SET nome = '$nomeEdit', id_contato = '$contatoEdit', cargo = '$cargoEdit', tipotel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipotel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipotel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', site = '$siteEdit', cnpj = '$cnpjEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit' WHERE id = '$id_empresa'";
+            $sql = "UPDATE empresas SET nome = '$nomeEdit', id_contato = '$idBuscaContatoEdit', cargo = '$cargoEdit', tipotel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipotel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipotel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', site = '$siteEdit', cnpj = '$cnpjEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit' WHERE id = '$id_empresa'";
             $sql = $this->db->prepare($sql);
             $sql->execute();
-            
+
             $id_empresa = addslashes($id_empresa);
             $data = date("Y-m-d H:i:s");
             $sql = "INSERT INTO historico_empresas VALUES('','$id_user_edit','$id_empresa','','$data')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
-            
+
             return TRUE;
         } else {
             return FALSE;
+        }
+    }
+
+    public function buscaEmpresa($busca) {
+        $sql = "SELECT id,nome,cargo FROM  empresas WHERE nome LIKE '$busca%'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+
+    private function insereEmpresaVazio($nome, $id_user) {
+        $dataInsercao = date("Y-m-d H:i:s");
+        $sql = "INSERT INTO empresas VALUES('','$dataInsercao','$nome','','','','','','','','','','','','','','$id_user')";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $this->db->lastInsertId();
+    }
+
+    public function atualizaID_Contato($id_empresa, $id_contato) {
+        $sql = "UPDATE empresas SET id_contato = '$id_contato' WHERE id = '$id_empresa'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+    }
+    
+    public function verificaEmpresaNome($nome, $id_user) {
+//        $nome = utf8_encode($nome);
+        $sql = "SELECT id FROM  empresas WHERE nome = '$nome'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        if (empty($sql->fetch())) {
+            return $this->insereEmpresaVazio($nome, $id_user);
+        } else {
+            return $sql->fetch()['id'];
         }
     }
 

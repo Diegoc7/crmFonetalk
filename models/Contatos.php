@@ -14,7 +14,7 @@
 class Contatos extends model {
 
     //put your code here
-    
+
 
     public function adicionaUsuario($array) {
 //        var_dump($array);
@@ -26,6 +26,11 @@ class Contatos extends model {
                 $empresa = '';
             } else {
                 $empresa = addslashes($empresa);
+            }
+            if (empty($idBuscaEmpresa) || !isset($idBuscaEmpresa)) {
+                $idBuscaEmpresa = '';
+            } else {
+                $idBuscaEmpresa = addslashes($idBuscaEmpresa);
             }
             $cargo = addslashes($cargo);
 //            $tipoCell = addslashes($tipoCell);
@@ -75,7 +80,8 @@ class Contatos extends model {
             $observacao = addslashes($observacao);
             $id_user = addslashes($id_user);
             $dataInsercao = date("Y-m-d H:i:s");
-            $sql = "INSERT INTO contatos VALUES('','$dataInsercao','$nome','$empresa','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$origem','$cpf','$data','$endereco','$observacao','$id_user')";
+            $sql = "INSERT INTO contatos VALUES('','$dataInsercao','$nome','$idBuscaEmpresa','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$origem','$cpf','$data','$endereco','$observacao','$id_user')";
+//            $sql = "INSERT INTO contatos VALUES('','$dataInsercao','$nome','$empresa','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$origem','$cpf','$data','$endereco','$observacao','$id_user')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
             return $this->db->lastInsertId();
@@ -84,7 +90,14 @@ class Contatos extends model {
         }
     }
 
-   
+    public function insereContatoArquivo($dataInsercao, $nome, $empresa, $cargo, $tipoCell, $telefone, $tipoCell2, $telefone2, $tipoCell3, $telefone3, $email, $origem, $cpf, $data, $endereco, $observacao, $id_user) {
+//       $nome = utf8_encode($nome);
+//       $email = utf8_encode($email);
+        $sql = "INSERT INTO contatos VALUES('','$dataInsercao','$nome','$empresa','$cargo','$tipoCell','$telefone','$tipoCell2','$telefone2','$tipoCell3','$telefone3','$email','$origem','$cpf','$data','$endereco','$observacao','$id_user')";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $this->db->lastInsertId();
+    }
 
     public function buscaContatosTabela() {
 //     echo   $sql = "SELECT c.nome,c.telefone1,c.email,e.nome AS empresa FROM contatos AS c JOIN empresas AS e WHERE IF(c.id_empresa != 0) THEN c.id_empresa = e.id ELSE (c.id_empresa = 1)";
@@ -117,6 +130,11 @@ class Contatos extends model {
                 $empresaEdit = '';
             } else {
                 $empresaEdit = addslashes($empresaEdit);
+            }
+            if (empty($idBuscaEmpresaEdit) || !isset($idBuscaEmpresaEdit)) {
+                $idBuscaEmpresaEdit = '';
+            } else {
+                $idBuscaEmpresaEdit = addslashes($idBuscaEmpresaEdit);
             }
             $cargoEdit = addslashes($cargoEdit);
 //            $tipoCell = addslashes($tipoCell);
@@ -167,13 +185,14 @@ class Contatos extends model {
             $enderecoEdit = addslashes($enderecoEdit);
             $observacaoEdit = addslashes($observacaoEdit);
             $id_user_edit = addslashes($id_user_edit);
-            $sql = "UPDATE contatos SET nome = '$nomeEdit', id_empresa = '$empresaEdit', cargo = '$cargoEdit', tipo_tel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipo_tel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipo_tel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', origem = '$origemEdit', cpf = '$cpfEdit', data_nascimento = '$dataEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit'   WHERE id = '$id_contato'";
+             $id_contato = addslashes($id_contato);
+            $sql = "UPDATE contatos SET nome = '$nomeEdit', id_empresa = '$idBuscaEmpresaEdit', cargo = '$cargoEdit', tipo_tel1 = '$tipoCellEdit', telefone1 = '$telefoneEdit', tipo_tel2 = '$tipoCell2Edit', telefone2 = '$telefone2Edit', tipo_tel3 = '$tipoCell3Edit', telefone3 = '$telefone3Edit', email = '$emailEdit', origem = '$origemEdit', cpf = '$cpfEdit', data_nascimento = '$dataEdit', endereco = '$enderecoEdit', observacao = '$observacaoEdit'   WHERE id = '$id_contato'";
             shell_exec("echo '" . $id_user_edit . " << SQL id " . "' >> /var/log/log_developer/adm.log");
             shell_exec("echo '" . $sql . " << SQL Editando Contato " . "' >> /var/log/log_developer/adm.log");
             $sql = $this->db->prepare($sql);
             $sql->execute();
 
-            $id_contato = addslashes($id_contato);
+           
             $data = date("Y-m-d H:i:s");
             $sql = "INSERT INTO historico_contatos VALUES('','$id_user_edit','$id_contato','','$data')";
             $sql = $this->db->prepare($sql);
@@ -183,6 +202,22 @@ class Contatos extends model {
         } else {
             return FALSE;
         }
+    }
+    
+     public function buscaContato($busca) {
+        $sql = "SELECT id,nome,cargo FROM  contatos WHERE nome LIKE '$busca%' LIMIT 50";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+    
+    public function ContUser($id_user){
+         $sql = "SELECT COUNT(id) as c FROM contatos WHERE id_user = '$id_user'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        $retorno = $sql->fetch();
+//         var_dump($retorno);
+         return $retorno['c'];
     }
 
 }

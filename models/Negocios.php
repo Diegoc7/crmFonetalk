@@ -22,7 +22,7 @@ class Negocios extends model {
             $dataPrevisao = addslashes($dataPrevisao);
             $dataPrevisao = $this->formataHoraParaBanco($dataPrevisao);
             $data = date('Y/m/d H:i:s');
-            $sql = "INSERT INTO negocios VALUES('','$data','$nome','$fase', '$valor', '$dataPrevisao', '$status', '$contato', '$empresa' , '$id_user')";
+            $sql = "INSERT INTO negocios VALUES('','$data','$nome','$fase', '$valor', '$dataPrevisao', '$status', '$idBuscaContato', '$idBuscaEmpresa' , '$id_user')";
             $sql = $this->db->prepare($sql);
             $sql->execute();
 //            $idNegocio = $this->db->lastInsertId();
@@ -176,6 +176,37 @@ class Negocios extends model {
         }
     }
 
+    public function addNegocioArquivo($ganho, $perdido, $atual, $id_user) {
+        $retorno = $this->buscaNegocioUser($id_user);
+        $ganhoAnt = $retorno['ganho'];
+        $perdidoAnt = $retorno['perdido'];
+        $atualAnt = $retorno['atual'];
+//        var_dump($retorno);
+        $sql = '';
+        $vir = '';
+        if ($ganho == 1) {
+            $add = $ganhoAnt + 1;
+            $sql .= "ganho = '$add'";
+            $vir = ',';
+        }
+        if ($perdido == 1) {
+            $add = $perdidoAnt + 1;
+            $sql .= "$vir perdido = '$add'";
+            $vir = ',';
+        }
+        if ($atual == 1) {
+            $add = $atualAnt + 1;
+            $sql .= "$vir atual = '$add'";
+            $vir = ',';
+        }
+        if (!empty($vir) && !empty($id_user)) {
+            $sql = "UPDATE negocio_user SET $sql WHERE id_user = '$id_user'";
+            $sql = $this->db->prepare($sql);
+            $sql->execute();
+        }
+//        echo $sql;
+    }
+
     public function buscaNegociosTabela() {
 //     echo   $sql = "SELECT c.nome,c.telefone1,c.email,e.nome AS empresa FROM contatos AS c JOIN empresas AS e WHERE IF(c.id_empresa != 0) THEN c.id_empresa = e.id ELSE (c.id_empresa = 1)";
         $sql = "SELECT negocios.id, negocios.status, negocios.nome, negocios.valor, empresas.nome AS empresa, contatos.nome AS contato, usuario.nome AS usuario FROM negocios LEFT JOIN empresas ON negocios.id_empresa = empresas.id LEFT JOIN contatos ON negocios.id_contato = contatos.id LEFT JOIN usuario ON negocios.id_user = usuario.id";
@@ -193,8 +224,8 @@ class Negocios extends model {
         return $this->arrumaNegocioUnico($array);
 //        return $sql->fetchAll();
     }
-    
-     private function arrumaNegocioUnico($array = '') {
+
+    private function arrumaNegocioUnico($array = '') {
         if (!empty($array)) {
             $cont = 0;
             $passaArray = '';
@@ -232,8 +263,8 @@ class Negocios extends model {
         return $this->arrumaNegocioHistoricoUnico($array);
 //        return $sql->fetchAll();
     }
-    
-     private function arrumaNegocioHistoricoUnico($array = '') {
+
+    private function arrumaNegocioHistoricoUnico($array = '') {
         if (!empty($array)) {
             $cont = 0;
             $passaArray = '';
@@ -305,8 +336,15 @@ class Negocios extends model {
         $sql->execute();
         return $sql->fetchAll();
     }
+
     public function buscaNegociosEmpresaID($id) {
         $sql = "SELECT nome FROM negocios WHERE id_empresa = '$id'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+    public function buscaNegocios($busca) {
+        $sql = "SELECT id,nome FROM  negocios WHERE nome LIKE '$busca%' LIMIT 50";
         $sql = $this->db->prepare($sql);
         $sql->execute();
         return $sql->fetchAll();

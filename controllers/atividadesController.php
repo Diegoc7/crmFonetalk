@@ -177,5 +177,12 @@ class atividadesController extends controller {
         $atividades->deletaAgendaCron($id);
         echo json_encode('ok');
     }
-
+    
+    public function buscaNegocio($busca){
+//        echo $busca;
+        $negocios = new Negocios();
+        $retorno = $negocios->buscaNegocios($busca);
+//        var_dump($retorno);
+        echo json_encode($retorno);
+    }
 }

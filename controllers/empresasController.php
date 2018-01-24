@@ -31,6 +31,7 @@ class empresasController extends controller{
     public function buscaTabela() {
         $empresas = new Empresas();
         $retorno = $empresas->buscaEmpresasTabela();
+//        $retorno = '';
 //        var_dump($retorno);
         echo json_encode($retorno);
     }
@@ -93,5 +94,13 @@ class empresasController extends controller{
         } else {
             echo json_encode('erro');
         }
+    }
+    
+    public function buscaContato($busca){
+//        echo $busca;
+        $contatos = new Contatos();
+        $retorno = $contatos->buscaContato($busca);
+//        var_dump($retorno);
+        echo json_encode($retorno);
     }
 }

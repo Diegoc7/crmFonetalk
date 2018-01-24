@@ -21,6 +21,9 @@ class loginController extends controller {
                 if($retorno['tipo'] == 1){
                     $_SESSION['tipo'] = 'Administração';
                 }else if($retorno['tipo'] == 2){
+                     $_SESSION['tipo'] = 'Operador(a)';
+                
+                }else if($retorno['tipo'] == 3){
                      $_SESSION['tipo'] = 'Vendedor(a)';
                 }
                 

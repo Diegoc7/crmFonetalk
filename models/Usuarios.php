@@ -83,5 +83,18 @@ class Usuarios extends model {
         $sql->execute();
         return $sql->fetchAll();
     }
-
+    public function buscaUsuarioID($nome) {
+        $sql = "SELECT id FROM usuario WHERE nome LIKE '%$nome%'";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetch()['id'];
+    }
+    public function buscaRelatorioUser(){
+//        $sql = "SELECT contatos.id, contatos.nome, contatos.telefone1, contatos.email, empresas.nome AS empresa FROM contatos LEFT JOIN empresas ON contatos.id_empresa = empresas.id";
+        $sql = "SELECT usuario.nome, negocio_user.* FROM usuario JOIN negocio_user WHERE usuario.id = negocio_user.id_user";
+        $sql = $this->db->prepare($sql);
+        $sql->execute();
+        return $sql->fetchAll();
+    }
+    
 }

@@ -132,7 +132,7 @@
                         <li id="bar_contatos" > <a href="<?php echo BASE_URL ?>contatos"> <i class="icon-user"></i>Contatos </a></li>
                         <li id="bar_empresas"> <a href="<?php echo BASE_URL ?>empresas"> <i class="fa fa-building"></i>Empresas </a></li>
                         <li id="bar_atividades"> <a href="<?php echo BASE_URL ?>atividades"> <i class="icon-form"></i>Atividades </a></li>
-                        <li id="barRelatorio"> <a href="<?php echo BASE_URL ?>forms.html"> <i class="fa fa-file"></i>Relatório </a></li>
+                        <li id="bar_relatorio"> <a href="<?php echo BASE_URL ?>relatorio"> <i class="fa fa-file"></i>Relatório </a></li>
                         <!--<li> <a href="login.html"> <i class="icon-interface-windows"></i>Login Page</a></li>-->
                     </ul><span class="heading">Extras</span>
                     <ul class="list-unstyled">

@@ -37,9 +37,16 @@
                                 <div class="col-sm-6">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="contato" name="contato"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
+<!--                                        <select id="contato" name="contato"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
 
-                                        </select>
+                                        </select>-->
+                                        <input id="contato" type="text" name="contato"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaContato" type="hidden" name="idBuscaContato"   >
+                                        <label for="contato" class="label-material">Contato </label>
+                                        <div id="respostaContato" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -175,9 +182,15 @@
                                 <div class="col-sm-6">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="contatoEdit" name="contatoEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
-
-                                        </select>
+<!--                                        <select id="contatoEdit" name="contatoEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione um contato" >
+                                        </select>-->
+                                        <input id="contatoEdit" type="text" name="contatoEdit"  class="input-material" maxlength="100"  >
+                                        <input id="idBuscaContatoEdit" type="hidden" name="idBuscaContatoEdit"   >
+                                        <label for="contato" class="label-material">Contato </label>
+                                        <div id="respostaContatoEdit" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>

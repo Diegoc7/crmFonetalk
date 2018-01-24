@@ -39,32 +39,44 @@ class negociosController extends controller {
 //        var_dump($retorno);
         echo json_encode($retorno);
     }
-    public function buscaInfoNegocioUser($id_user){
+
+    public function buscaInfoNegocioUser($id_user) {
         $negocios = new Negocios();
+        $contatos = new Contatos();
+        $qtdContatos = $contatos->ContUser($id_user);
         $retorno = $negocios->buscaNegocioUser($id_user);
-        
 //        var_dump($retorno);
-        $ganho = $perdido = $atual = 0;
-        extract($retorno);
-        $total = $ganho + $perdido + $atual;
-        $array = array(
+        if (!empty($retorno)) {
+            $ganho = $perdido = $atual = 0;
+            extract($retorno);
+            $total = $ganho + $perdido + $atual;
+            $array = array(
+                'qtd_contatos' => $qtdContatos,
                 'ganho' => $ganho,
                 'perdido' => $perdido,
                 'atual' => $atual,
                 'valor_ganho' => $valor_ganho,
                 'valor_perdido' => $valor_perdido,
                 'valor_temporario' => $valor_temporario,
-                'porcGanho' =>   $this->calculaPorc($total, $ganho),
+                'porcGanho' => $this->calculaPorc($total, $ganho),
                 'porcPerdido' => $this->calculaPorc($total, $perdido),
                 'porcAtual' => $this->calculaPorc($total, $atual),
-                );
+            );
 //        var_dump($array);
-        echo json_encode($array);
+            echo json_encode($array);
+        } else {
+            echo json_encode('vazio');
+        }
     }
 
-    private function calculaPorc($total, $valor){
-        $porc = $valor * 100 / $total;
-        return round($porc, 2);
+    private function calculaPorc($total, $valor) {
+//        echo $valor;
+        if ($valor != 0) {
+            $porc = $valor * 100 / $total;
+            return round($porc, 2);
+        } else {
+            return 0;
+        }
     }
 
     public function buscaNegocioHistorico($id) {
@@ -73,20 +85,22 @@ class negociosController extends controller {
 //        var_dump($retorno);
         echo json_encode($retorno);
     }
-    public function buscaNegocio($id){
+
+    public function buscaNegocio($id) {
         $negocios = new Negocios();
         $retorno = $negocios->buscaNegociosUnico($id);
 //        var_dump($retorno);
         echo json_encode($retorno);
     }
-    
-    public function negocioUnico($id){
+
+    public function negocioUnico($id) {
         $negocios = new Negocios();
         $retorno = $negocios->buscaNegociosUnico($id);
 //        var_dump($retorno);
         echo json_encode($retorno);
     }
-    public function edita(){
+
+    public function edita() {
 //        var_dump($_POST);
         $negocios = new Negocios();
         $retorno = $negocios->editaNegocio($_POST);
@@ -96,16 +110,19 @@ class negociosController extends controller {
             echo json_encode('erro');
         }
     }
-    public function buscaNomeContatoID($id){
+
+    public function buscaNomeContatoID($id) {
         $negocios = new Negocios();
-            $retornoNegocio = $negocios->buscaNegociosContatosID($id);
+        $retornoNegocio = $negocios->buscaNegociosContatosID($id);
 //            var_dump($retornoNegocio);
-          echo  json_encode($retornoNegocio);
+        echo json_encode($retornoNegocio);
     }
-    public function buscaNomeEmpresaID($id){
+
+    public function buscaNomeEmpresaID($id) {
         $negocios = new Negocios();
-            $retornoNegocio = $negocios->buscaNegociosContatosID($id);
+        $retornoNegocio = $negocios->buscaNegociosContatosID($id);
 //            var_dump($retornoNegocio);
-          echo  json_encode($retornoNegocio);
+        echo json_encode($retornoNegocio);
     }
+
 }

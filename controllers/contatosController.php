@@ -21,6 +21,7 @@ class contatosController extends controller {
     public function buscaTabela() {
         $contatos = new Contatos();
         $retorno = $contatos->buscaContatosTabela();
+//        $retorno = '';
 //        var_dump($retorno);
         echo json_encode($retorno);
     }
@@ -99,8 +100,11 @@ class contatosController extends controller {
             echo json_encode('erro');
         }
     }
-    public function atividade(){
-        echo 'ok';
-        print_r($_POST);
+     public function buscaEmpresa($busca){
+//        echo $busca;
+        $empresas = new Empresas();
+        $retorno = $empresas->buscaEmpresa($busca);
+//        var_dump($retorno);
+        echo json_encode($retorno);
     }
 }

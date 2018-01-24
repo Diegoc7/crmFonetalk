@@ -37,9 +37,16 @@
                                 <div class="col-sm-6">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="empresa" name="empresa"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
+<!--                                        <select id="empresa" name="empresa"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
 
-                                        </select>
+                                        </select>-->
+                                        <input id="empresa" type="text" name="empresa"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaEmpresa" type="hidden" name="idBuscaEmpresa"   >
+                                        <label for="contato" class="label-material">Empresa </label>
+                                        <div id="respostaEmpresa" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
@@ -120,13 +127,14 @@
                                         <option value="Google" >Google</option>
                                         <option value="Indicação" >Indicação</option>
                                         <option value="Instagram" >Instagram</option>
-                                        <option value="excliente" >Já foi cliente</option>
+                                        <!--<option value="excliente" >Já foi cliente</option>-->
+                                        <option value="Já foi cliente" >Já foi cliente</option>
                                         <option value="LinkedIn" >LinkedIn</option>
                                         <option value="Panfleto" >Panfleto</option>
                                         <option value="Rádio" >Rádio</option>
                                         <option value="Site" >Site</option>
-                                        <option value="telefoneAtivo" >Telefone Ativo</option>
-                                        <option value="telefonePassivo" >Telefone Passivo</option>
+                                        <option value="telefone Ativo" >Telefone Ativo</option>
+                                        <option value="telefone Passivo" >Telefone Passivo</option>
                                         <option value="Tv" >Tv</option>
                                     </select>
                                 </div>
@@ -194,9 +202,15 @@
                                 <div class="col-sm-6">
                                     <div class="form-group-material">
                                         <!--<label for="empresa" class="label-material">Empresa</label>-->
-                                        <select id="empresaEdit" name="empresaEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
-
-                                        </select>
+<!--                                        <select id="empresaEdit" name="empresaEdit"   class="selectpicker form-control  show-tick" data-live-search="true" title="Selecione uma empresa" >
+                                        </select>-->
+                                        <input id="empresaEdit" type="text" name="empresaEdit"  class="input-material" autocomplete="off" maxlength="100"  >
+                                        <input id="idBuscaEmpresaEdit" type="hidden" name="idBuscaEmpresaEdit"   >
+                                        <label for="contato" class="label-material">Empresa </label>
+                                        <div id="respostaEmpresaEdit" >
+                                            <ul>
+                                            </ul>
+                                        </div>
                                     </div>
 
                                 </div>
